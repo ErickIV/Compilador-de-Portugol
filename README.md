@@ -1,7 +1,7 @@
 # Compilador Portugol - Versão Modularizada
 
 Este projeto implementa um compilador completo para a linguagem Portugol(.por), seguindo as melhores práticas de engenharia de software com código modularizado e bem estruturado.
-Desenvolvido usando Python 3.11.
+Desenvolvido usando Python 3.11, para a UC de Teoria da Computação e Compiladores da UNISUL.
 
 ## 📁 Estrutura do Projeto
 
