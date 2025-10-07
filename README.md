@@ -1,6 +1,7 @@
 # Compilador Portugol - Versão Modularizada
 
-Este projeto implementa um compilador completo para a linguagem Portugol, seguindo as melhores práticas de engenharia de software com código modularizado e bem estruturado.
+Este projeto implementa um compilador completo para a linguagem Portugol(.por), seguindo as melhores práticas de engenharia de software com código modularizado e bem estruturado.
+Desenvolvido usando Python 3.11.
 
 ## 📁 Estrutura do Projeto
 
@@ -10,14 +11,14 @@ A3_Compiladores/
 │   ├── __init__.py         # Configuração do pacote
 │   ├── exceptions.py       # Hierarquia de exceções
 │   ├── ast_nodes.py        # Definições da AST
-│   ├── lexer.py           # Analisador léxico
-│   ├── parser.py          # Analisador sintático
-│   ├── semantic.py        # Analisador semântico
-│   ├── codegen.py         # Gerador de código
-│   └── main.py            # Compilador principal
-├── programa.py            # Versão monolítica original
-├── programa.por           # Programa de teste
-└── teste_modularizacao.py # Script de teste da modularização
+│   ├── lexer.py            # Analisador léxico
+│   ├── parser.py           # Analisador sintático
+│   ├── semantic.py         # Analisador semântico
+│   ├── codegen.py          # Gerador de código
+│   └── main.py             # Compilador principal
+├── programa.py             # Versão monolítica original
+├── programa.por            # Programa de teste
+└── teste_modularizacao.py  # Script de teste da modularização
 ```
 
 ## 🏗️ Arquitetura Modular
@@ -25,8 +26,8 @@ A3_Compiladores/
 ### 1. **src/exceptions.py** - Hierarquia de Exceções
 - `CompiladorError`: Classe base para todos os erros
 - `ErroLexico`: Erros na análise léxica
-- `ErroSintatico`: Erros na análise sintática
-- `ErroSemantico`: Erros na análise semântica
+- `ErroSintatico`: Erro na análise sintática
+- `ErroSemantico`: Erro na análise semântica
 
 ### 2. **src/ast_nodes.py** - Árvore Sintática Abstrata
 - Definições de todos os nós da AST
