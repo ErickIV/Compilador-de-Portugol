@@ -16,8 +16,13 @@ __version__ = "1.0.0"
 __author__ = "Estudante de Compiladores"
 
 # Exportar classes principais para facilitar importação
-from .main import CompiladorPortugol
 from .exceptions import CompiladorError, ErroLexico, ErroSintatico, ErroSemantico
+
+# Função para importar CompiladorPortugol apenas quando necessário
+def get_compilador():
+    """Importa e retorna a classe CompiladorPortugol sob demanda"""
+    from .main import CompiladorPortugol
+    return CompiladorPortugol
 from .lexer import Lexer
 from .parser import Parser
 from .semantic import AnalisadorSemantico
