@@ -87,12 +87,17 @@ class TabelaSimbolos:
         """
         Verifica se uma variável foi inicializada antes do uso
         
-        Raises:
-            ErroSemantico: Se a variável não foi inicializada
+        Emite um warning se a variável não foi inicializada.
         """
         if nome in self.simbolos and not self.simbolos[nome]['inicializada']:
-            # Aviso, mas não erro fatal - permitimos uso de variáveis não inicializadas
-            pass
+            # Emitir warning ao invés de erro fatal
+            import warnings
+            warnings.warn(
+                f"Variável '{nome}' pode estar sendo usada antes de ser inicializada " +
+                f"(linha {linha}, coluna {coluna})",
+                SyntaxWarning,
+                stacklevel=2
+            )
 
     def obter_tipo(self, nome: str) -> str:
         """Obtém o tipo de uma variável"""
@@ -133,7 +138,8 @@ class AnalisadorSemantico:
         self.tabela_simbolos.declarar_variavel(
             declaracao.nome,
             declaracao.tipo,
-            0, 0  # Linha e coluna seriam obtidas do contexto real
+            getattr(declaracao, 'linha', 0),
+            getattr(declaracao, 'coluna', 0)
         )
 
     def _analisar_comando(self, comando: Comando) -> None:
@@ -153,7 +159,9 @@ class AnalisadorSemantico:
         """Analisa comando de atribuição"""
         # Verificar se variável foi declarada
         tipo_variavel = self.tabela_simbolos.verificar_variavel_declarada(
-            atribuicao.variavel, 0, 0
+            atribuicao.variavel, 
+            getattr(atribuicao, 'linha', 0), 
+            getattr(atribuicao, 'coluna', 0)
         )
         
         # Analisar expressão do lado direito
@@ -161,7 +169,9 @@ class AnalisadorSemantico:
         
         # Verificar compatibilidade de tipos
         self._verificar_compatibilidade_tipos(
-            tipo_variavel, tipo_expressao, 0, 0,
+            tipo_variavel, tipo_expressao, 
+            getattr(atribuicao, 'linha', 0), 
+            getattr(atribuicao, 'coluna', 0),
             f"Atribuição incompatível: '{tipo_variavel}' = '{tipo_expressao}'"
         )
         
@@ -200,7 +210,9 @@ class AnalisadorSemantico:
         """Analisa comando de entrada"""
         # Verificar se variável foi declarada
         self.tabela_simbolos.verificar_variavel_declarada(
-            entrada.variavel, 0, 0
+            entrada.variavel, 
+            getattr(entrada, 'linha', 0), 
+            getattr(entrada, 'coluna', 0)
         )
         
         # Marcar como inicializada
@@ -228,12 +240,16 @@ class AnalisadorSemantico:
         elif isinstance(expressao, Variavel):
             # Verificar se variável foi declarada
             tipo = self.tabela_simbolos.verificar_variavel_declarada(
-                expressao.nome, 0, 0
+                expressao.nome, 
+                getattr(expressao, 'linha', 0), 
+                getattr(expressao, 'coluna', 0)
             )
             
             # Verificar se foi inicializada
             self.tabela_simbolos.verificar_inicializada(
-                expressao.nome, 0, 0
+                expressao.nome, 
+                getattr(expressao, 'linha', 0), 
+                getattr(expressao, 'coluna', 0)
             )
             
             return tipo
@@ -254,13 +270,24 @@ class AnalisadorSemantico:
         operador = expressao.operador
         
         # Operadores aritméticos
-        if operador in {'+', '-', '*', '/'}:
+        if operador in {'+', '-', '*'}:
             if (tipo_esquerda in self.tipos_compativel_int_real and 
                 tipo_direita in self.tipos_compativel_int_real):
                 # Se um dos operandos é real, resultado é real
                 if tipo_esquerda == 'real' or tipo_direita == 'real':
                     return 'real'
                 return 'inteiro'
+            else:
+                raise ErroSemantico(
+                    f"Operação aritmética '{operador}' incompatível entre '{tipo_esquerda}' e '{tipo_direita}'",
+                    0, 0
+                )
+        
+        # Divisão sempre retorna real (comportamento do Python 3)
+        elif operador == '/':
+            if (tipo_esquerda in self.tipos_compativel_int_real and 
+                tipo_direita in self.tipos_compativel_int_real):
+                return 'real'  # Divisão sempre retorna real
             else:
                 raise ErroSemantico(
                     f"Operação aritmética '{operador}' incompatível entre '{tipo_esquerda}' e '{tipo_direita}'",
@@ -347,10 +374,9 @@ class AnalisadorSemantico:
             tipo2 in self.tipos_compativel_int_real):
             return
         
-        # Para outros casos, ser mais permissivo na verificação
-        # Em um compilador real, seria mais rigoroso
+        # Permitir tipos desconhecidos (pode ser literal ou erro anterior)
         if tipo1 == 'desconhecido' or tipo2 == 'desconhecido':
             return
         
-        # Tipos incompatíveis - lançar erro apenas em casos críticos
-        # raise ErroSemantico(mensagem, linha, coluna)
+        # Tipos incompatíveis - lançar erro
+        raise ErroSemantico(mensagem, linha, coluna)

@@ -133,10 +133,15 @@ class Parser:
 
     def _analisar_atribuicao(self) -> Atribuicao:
         """Analisa comando de atribuição: variavel <- expressao"""
-        nome_variavel = self._esperar_token(TipoToken.IDENTIFICADOR).lexema
+        token_var = self._esperar_token(TipoToken.IDENTIFICADOR)
+        nome_variavel = token_var.lexema
         self._esperar_token(TipoToken.ATRIBUICAO)
         expressao = self._analisar_expressao()
-        return Atribuicao(nome_variavel, expressao)
+        atrib = Atribuicao(nome_variavel, expressao)
+        # Adicionar informações de localização dinamicamente
+        atrib.linha = token_var.linha
+        atrib.coluna = token_var.coluna
+        return atrib
 
     def _analisar_condicional(self) -> Condicional:
         """Analisa comando condicional: se condicao entao comandos [senao comandos] fimse"""
@@ -178,11 +183,15 @@ class Parser:
 
     def _analisar_entrada(self) -> Entrada:
         """Analisa comando de entrada: leia(variavel)"""
-        self._esperar_token(TipoToken.LEIA)
+        token_leia = self._esperar_token(TipoToken.LEIA)
         self._esperar_token(TipoToken.ABRE_PARENTESES)
         nome_variavel = self._esperar_token(TipoToken.IDENTIFICADOR).lexema
         self._esperar_token(TipoToken.FECHA_PARENTESES)
-        return Entrada(nome_variavel)
+        entrada = Entrada(nome_variavel)
+        # Adicionar informações de localização dinamicamente
+        entrada.linha = token_leia.linha
+        entrada.coluna = token_leia.coluna
+        return entrada
 
     def _analisar_saida(self) -> Saida:
         """Analisa comando de saída: escreva(expressao1, expressao2, ...)"""
@@ -288,26 +297,42 @@ class Parser:
         # Números
         if self.token_atual.tipo in {TipoToken.NUMERO_INTEIRO, TipoToken.NUMERO_REAL}:
             valor = self.token_atual.lexema
+            linha, coluna = self.token_atual.linha, self.token_atual.coluna
             self._avancar()
-            return Literal(valor)
+            lit = Literal(valor)
+            lit.linha = linha
+            lit.coluna = coluna
+            return lit
         
         # Literais booleanos
         if self.token_atual.tipo in {TipoToken.VERDADEIRO, TipoToken.FALSO}:
             valor = self.token_atual.lexema
+            linha, coluna = self.token_atual.linha, self.token_atual.coluna
             self._avancar()
-            return Literal(valor)
+            lit = Literal(valor)
+            lit.linha = linha
+            lit.coluna = coluna
+            return lit
         
         # Strings
         if self.token_atual.tipo == TipoToken.TEXTO:
             valor = self.token_atual.lexema
+            linha, coluna = self.token_atual.linha, self.token_atual.coluna
             self._avancar()
-            return Literal(f'"{valor}"')
+            lit = Literal(f'"{valor}"')
+            lit.linha = linha
+            lit.coluna = coluna
+            return lit
         
         # Variáveis
         if self.token_atual.tipo == TipoToken.IDENTIFICADOR:
             nome = self.token_atual.lexema
+            linha, coluna = self.token_atual.linha, self.token_atual.coluna
             self._avancar()
-            return Variavel(nome)
+            var = Variavel(nome)
+            var.linha = linha
+            var.coluna = coluna
+            return var
         
         # Expressão entre parênteses
         if self.token_atual.tipo == TipoToken.ABRE_PARENTESES:
@@ -319,9 +344,13 @@ class Parser:
         # Expressão unária negativa
         if self.token_atual.tipo == TipoToken.MENOS:
             operador = self.token_atual.lexema
+            linha, coluna = self.token_atual.linha, self.token_atual.coluna
             self._avancar()
             operando = self._analisar_fator()
-            return ExpressaoUnaria(operador, operando)
+            expr_un = ExpressaoUnaria(operador, operando)
+            expr_un.linha = linha
+            expr_un.coluna = coluna
+            return expr_un
         
         # Token inesperado
         raise ErroSintatico(
