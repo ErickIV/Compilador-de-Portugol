@@ -147,35 +147,53 @@ class GeradorDeCodigo:
 
     def _gerar_entrada(self, entrada: Entrada) -> None:
         """Gera código para comando de entrada"""
-        self._adicionar_linha(f'{entrada.variavel} = input("Digite um valor: ")')
-        
         # Conversão automática de tipo baseada na declaração da variável
         tipo_variavel = self.tabela_tipos.get(entrada.variavel, 'caracter')
         
         if tipo_variavel == 'inteiro':
-            self._adicionar_linha(f"try:")
+            # Conversão inline com tratamento de erro em uma linha
+            self._adicionar_linha(f'_input_temp = input("Digite um valor: ")')
+            self._adicionar_linha(f'try:')
             self._aumentar_indentacao()
-            self._adicionar_linha(f"{entrada.variavel} = int({entrada.variavel})")
+            self._adicionar_linha(f'{entrada.variavel} = int(_input_temp)')
             self._diminuir_indentacao()
-            self._adicionar_linha(f"except ValueError:")
+            self._adicionar_linha(f'except (ValueError, EOFError):')
             self._aumentar_indentacao()
-            self._adicionar_linha(f'{entrada.variavel} = 0  # Valor padrão para inteiro inválido')
+            self._adicionar_linha(f'{entrada.variavel} = 0  # Valor padrão para entrada inválida')
             self._diminuir_indentacao()
             
         elif tipo_variavel == 'real':
-            self._adicionar_linha(f"try:")
+            # Conversão inline com tratamento de erro em uma linha
+            self._adicionar_linha(f'_input_temp = input("Digite um valor: ")')
+            self._adicionar_linha(f'try:')
             self._aumentar_indentacao()
-            self._adicionar_linha(f"{entrada.variavel} = float({entrada.variavel})")
+            self._adicionar_linha(f'{entrada.variavel} = float(_input_temp)')
             self._diminuir_indentacao()
-            self._adicionar_linha(f"except ValueError:")
+            self._adicionar_linha(f'except (ValueError, EOFError):')
             self._aumentar_indentacao()
-            self._adicionar_linha(f'{entrada.variavel} = 0.0  # Valor padrão para real inválido')
+            self._adicionar_linha(f'{entrada.variavel} = 0.0  # Valor padrão para entrada inválida')
             self._diminuir_indentacao()
             
         elif tipo_variavel == 'logico':
-            self._adicionar_linha(f"{entrada.variavel} = {entrada.variavel}.lower() in ['true', 'verdadeiro', '1', 'sim', 's']")
-        
-        # Para 'caracter', mantém como string (sem conversão necessária)
+            self._adicionar_linha(f'try:')
+            self._aumentar_indentacao()
+            self._adicionar_linha(f'_input_temp = input("Digite um valor: ")')
+            self._adicionar_linha(f"{entrada.variavel} = _input_temp.lower() in ['true', 'verdadeiro', '1', 'sim', 's']")
+            self._diminuir_indentacao()
+            self._adicionar_linha(f'except EOFError:')
+            self._aumentar_indentacao()
+            self._adicionar_linha(f'{entrada.variavel} = False  # Valor padrão para entrada inválida')
+            self._diminuir_indentacao()
+        else:
+            # Para 'caracter', mantém como string
+            self._adicionar_linha(f'try:')
+            self._aumentar_indentacao()
+            self._adicionar_linha(f'{entrada.variavel} = input("Digite um valor: ")')
+            self._diminuir_indentacao()
+            self._adicionar_linha(f'except EOFError:')
+            self._aumentar_indentacao()
+            self._adicionar_linha(f'{entrada.variavel} = ""  # Valor padrão para entrada inválida')
+            self._diminuir_indentacao()
 
     def _gerar_saida(self, saida: Saida) -> None:
         """Gera código para comando de saída"""
