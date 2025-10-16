@@ -17,16 +17,11 @@ __author__ = "Estudante de Compiladores"
 
 # Exportar classes principais para facilitar importação
 from .exceptions import CompiladorError, ErroLexico, ErroSintatico, ErroSemantico
-
-# Função para importar CompiladorPortugol apenas quando necessário
-def get_compilador():
-    """Importa e retorna a classe CompiladorPortugol sob demanda"""
-    from .main import CompiladorPortugol
-    return CompiladorPortugol
 from .lexer import Lexer
 from .parser import Parser
 from .semantic import AnalisadorSemantico
 from .codegen import GeradorDeCodigo
+from .main import CompiladorPortugol
 
 __all__ = [
     'CompiladorPortugol',
