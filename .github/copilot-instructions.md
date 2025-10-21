@@ -1,118 +1,128 @@
-# Compilador Portugol - AI Coding Instructions
+# Compilador Portugol - Instruções para IA (Copilot)
 
-## Architecture Overview
+## Visão Geral da Arquitetura
 
-This is a **4-phase educational compiler** translating Portugol (Portuguese pseudocode) to executable Python. Each phase is strictly isolated in separate modules following classic compiler architecture:
+Este é um compilador educacional de Portugol para Python, agora com **6 fases clássicas**:
 
 ```
-Source Code (.por) → Lexer → Parser → Semantic Analyzer → Code Generator → Python
+Fonte (.por) → Lexer (ER/AFD) → Parser → Analisador Semântico → Código Intermediário (3-endereços) → Otimizador → Gerador de Código Python
 ```
 
-**Critical Design Principle**: The pipeline is **unidirectional and immutable**. Each phase consumes the output of the previous phase without back-propagation. No phase modifies inputs from prior phases.
+**Princípio:** Pipeline unidirecional, cada fase consome a anterior, sem modificar etapas anteriores.
 
-## Module Responsibilities
+## Responsabilidades dos Módulos
 
-### 1. `lexer.py` - Tokenization Phase
-- **Input**: Raw source string
-- **Output**: Stream of `Token` objects with position tracking
-- **State Management**: Maintains `linha` (line) and `coluna` (column) for error reporting
-- **Comment Handling**: Ignores `//` line comments and `/* */` block comments
-- **Pattern**: Uses `palavras_chave` dict to distinguish keywords from identifiers
+### 1. `lexer.py` - Análise Léxica
+- Usa Expressões Regulares (ER) documentadas no início do arquivo.
+- Implementa AFDs explícitos (ver `automaton.py`) para identificadores, inteiros e reais.
+- Ignora comentários `//` e `/* ... */`.
+- Gera tokens com rastreamento de linha/coluna.
 
-### 2. `parser.py` - Syntax Analysis
-- **Input**: `Lexer` instance
-- **Output**: `Programa` AST node with `declaracoes` and `comandos`
-- **Pattern**: Recursive descent parser with `_esperar_token()` for syntax validation
-- **Grammar Structure**: 
-  - Variables must be declared before `inicio` keyword
-  - All commands between `inicio` and `fim`
-  - Program ends with `EOF` token
+### 2. `automaton.py` - Autômatos Finitos Determinísticos
+- Implementa AFDs para tokens principais.
+- Usado pelo lexer para validação e documentação.
 
-### 3. `semantic.py` - Type/Scope Validation
-- **Input**: `Programa` AST
-- **Output**: Validated AST (modifies in-place via `TabelaSimbolos`)
-- **Key Checks**:
-  - Variable declaration before use
-  - Type compatibility in operations (via `_verificar_tipos_compativeis()`)
-  - Uninitialized variable warnings (not errors)
-- **Pattern**: Uses visitor pattern on AST nodes
+### 3. `parser.py` - Análise Sintática
+- Parser descendente recursivo.
+- Gera AST (`Programa`, `Comando`, `Expressao` etc).
+- Exige declaração de variáveis antes de `inicio`.
 
-### 4. `codegen.py` - Python Generation
-- **Input**: Validated `Programa` AST
-- **Output**: Executable Python string
-- **Type Mapping**: `inteiro→int`, `real→float`, `caracter→str`, `logico→bool`
-- **Pattern**: 
-  - Wraps everything in `main()` function
-  - Uses `nivel_indentacao` for proper Python indentation
-  - Initializes all variables with defaults before commands
+### 4. `semantic.py` - Análise Semântica
+- Valida tipos, escopo e uso de variáveis.
+- Permite conversões implícitas.
+- Emite avisos para variáveis não inicializadas.
 
-## Critical Workflows
+### 5. `intermediate.py` - Geração de Código Intermediário
+- Gera código de 3 endereços (three-address code) a partir da AST.
+- Serve de entrada para o otimizador.
 
-### Compiling & Running Programs
+### 6. `optimizer.py` - Otimizações Clássicas
+- Implementa:
+  - Propagação de constantes
+  - Dobra de constantes
+  - Simplificações algébricas
+  - Propagação de cópias
+  - Eliminação de código morto
+- Opera sobre o código intermediário.
+
+### 7. `codegen.py` - Geração de Python
+- Converte AST (ou código intermediário otimizado) em Python executável.
+- Mapeia tipos: `inteiro→int`, `real→float`, `caracter→str`, `logico→bool`.
+- Garante indentação correta.
+
+### 8. `main.py` - Orquestração
+- Controla o pipeline e flags de CLI.
+- Permite executar cada fase separadamente (`--debug`, `--save`, `--intermediate`, `--optimize`).
+
+### 9. `compilar.py` - CLI
+- Ponto de entrada. Não bypassar `CompiladorPortugol` em `main.py`.
+
+## Fluxos de Trabalho
+
+### Compilar e Executar
 ```bash
-# Standard execution (compile + run)
+# Compilar e executar normalmente
 python compilar.py programa.por
 
-# Debug mode (shows all 4 phases)
+# Modo debug (mostra todas as fases)
 python compilar.py programa.por --debug
 
-# Save generated Python (doesn't execute)
+# Gerar código intermediário
+python compilar.py programa.por --intermediate
+
+# Otimizar código intermediário
+python compilar.py programa.por --optimize
+
+# Salvar Python gerado (não executa)
 python compilar.py programa.por --save
 ```
 
-**Important**: `compilar.py` is the CLI entry point. It calls `src/main.py::CompiladorPortugol` which orchestrates the pipeline. Never bypass the main compiler class.
+## Adicionando Novos Recursos à Linguagem
+1. Adicione o token em `ast_nodes.py` (enum `TipoToken`).
+2. Atualize `palavras_chave` em `lexer.py` (se for palavra reservada).
+3. Crie a classe AST em `ast_nodes.py`.
+4. Implemente parsing em `parser.py`.
+5. Adicione validação semântica em `semantic.py`.
+6. Implemente geração de código intermediário em `intermediate.py`.
+7. Adicione otimização em `optimizer.py` (se aplicável).
+8. Implemente geração de Python em `codegen.py`.
 
-### Adding New Language Features
+## Tratamento de Erros
+Use exceções customizadas de `exceptions.py`:
+- `ErroLexico` - Léxico
+- `ErroSintatico` - Sintaxe
+- `ErroSemantico` - Semântica
+- `ErroGeracaoCodigo` - Geração de código
+Todas incluem linha/coluna para localização precisa.
 
-**Always follow this order**:
-1. Add token type to `TipoToken` enum in `ast_nodes.py`
-2. Update `palavras_chave` dict in `lexer.py` (if keyword)
-3. Create AST node class in `ast_nodes.py` (inherit from `Comando` or `Expressao`)
-4. Implement parsing logic in `parser.py` (add to `_analisar_comando()` or expression parser)
-5. Add semantic validation in `semantic.py` (add visitor method)
-6. Implement code generation in `codegen.py` (add to `_gerar_comando()`)
+## Padrões da Linguagem Portugol
+- Atribuição: `<-` (não `=`)
+- Operadores lógicos: `e`, `ou`
+- Booleanos: `verdadeiro`, `falso`
+- Entrada: `leia(var)`
+- Saída: `escreva(expr, ...)`
+- Estruturas: `se`, `entao`, `senao`, `fimse`, `enquanto`, `faca`, `fimenquanto`
 
-### Error Handling Convention
+## Sistema de Tipos
+Tipagem fraca: só validação semântica, sem checagem em tempo de execução.
 
-Use custom exceptions from `exceptions.py`:
-- `ErroLexico` - Invalid characters/tokens
-- `ErroSintatico` - Grammar violations  
-- `ErroSemantico` - Type/scope issues
-- `ErroGeracaoCodigo` - Code generation failures
+## Testes e Exemplos
+- `exemplos/demo_completa.por` - Teste não interativo (todas as features)
+- `exemplos/calculadora_imc.por` - Exemplo interativo
+- `exemplos/bubble_sort.por` - Algoritmo com laços
+- `exemplos/teste_otimizacoes.por` - Exercita otimizador
 
-**Pattern**: All exceptions include `linha` and `coluna` for precise error location.
+Padrão: Sempre testar com `demo_completa.por` após mudanças.
 
-## Language-Specific Patterns
+## Armadilhas Comuns
+1. Lookahead: use `self.token_atual` e `_avancar()` no parser.
+2. Indentação: use `_adicionar_linha()` no codegen.
+3. Escopo: só escopo global.
+4. Comentários: podem aparecer em qualquer lugar, lexer deve consumir antes de tokenizar.
+5. EOF: lexer deve emitir `TipoToken.EOF` explicitamente.
 
-### Portugol Syntax Rules
-- **Assignment**: Uses `<-` not `=` (e.g., `x <- 10`)
-- **Logic Operators**: Portuguese keywords `e` (and), `ou` (or)
-- **Booleans**: `verdadeiro`/`falso` not true/false
-- **I/O**: `leia(var)` for input, `escreva(expr, ...)` for output
-- **Structure Keywords**: `entao`/`senao`/`fimse`, `faca`/`fimenquanto`
-
-### Type System
-Portugol is **weakly typed** - variables declared with types but no runtime type checking. The semantic analyzer validates compatibility but allows implicit conversions in Python generation.
-
-## Testing & Examples
-
-- `exemplos/demo_completa.por` - Non-interactive test suite (all features, 2-second run)
-- `exemplos/calculadora_imc.por` - Interactive user input example
-- `exemplos/bubble_sort.por` - Algorithm with nested loops
-
-**Test Pattern**: Always test with `demo_completa.por` first after changes - it exercises all language features.
-
-## Common Pitfalls
-
-1. **Token Lookahead**: Parser uses `self.token_atual` for current token, advance with `_avancar()` not `_esperar_token()`
-2. **Indentation**: Code generator tracks indentation state - never emit raw strings with tabs/spaces, use `_adicionar_linha()`
-3. **Variable Scope**: Portugol has single global scope - no nested scopes or functions
-4. **Comment Position**: Comments can appear anywhere in lexer, must be consumed before tokenizing next token
-5. **EOF Handling**: Parser expects explicit `TipoToken.EOF` - lexer must emit this after last token
-
-## Dependencies & Environment
-
-- **Pure Python**: No external dependencies, uses only stdlib
-- **Python Version**: Requires 3.11+ for dataclasses and typing features
-- **Encoding**: All `.por` files are UTF-8 (important for Portuguese characters)
-- **Shell**: CLI designed for PowerShell on Windows (uses `;` for command chaining)
+## Dependências e Ambiente
+- Python puro (stdlib)
+- Python 3.11+
+- `.por` em UTF-8
+- CLI para Windows (cmd/powershell)
