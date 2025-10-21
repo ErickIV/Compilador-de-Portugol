@@ -66,6 +66,29 @@ Implementação do algoritmo Bubble Sort com:
 
 ---
 
+### 4. **teste_otimizacoes.por** [NOVO]
+**Melhor para demonstrar código intermediário e otimizações**
+
+Demonstração das 5 otimizações implementadas:
+- ⚡ Constant Folding (dobramento de constantes)
+- ⚡ Constant Propagation (propagação de constantes)
+- ⚡ Algebraic Simplification (simplificação algébrica)
+- ⚡ Copy Propagation (propagação de cópias)
+- ⚡ Dead Code Elimination (código morto)
+
+**Execução Normal:** `python compilar.py exemplos/teste_otimizacoes.por`
+
+**Com Otimizações:** `python compilar.py exemplos/teste_otimizacoes.por --intermediate --optimize`
+
+**Tempo de execução:** ~1 segundo
+
+**Mostra:**
+- Código intermediário original (37 instruções)
+- Código intermediário otimizado (26 instruções)
+- Redução de 29.7% no código gerado
+
+---
+
 ## Como Executar
 
 ### Execução Normal
@@ -81,6 +104,16 @@ python compilar.py exemplos/demo_completa.por --debug
 ### Salvar código Python gerado
 ```bash
 python compilar.py exemplos/demo_completa.por --save
+```
+
+### Mostrar código intermediário e otimizações [NOVO]
+```bash
+python compilar.py exemplos/teste_otimizacoes.por --intermediate --optimize
+```
+
+### Demonstrar AFDs (educacional) [NOVO]
+```bash
+python compilar.py exemplos/demo_completa.por --show-afd
 ```
 
 ---
@@ -115,11 +148,15 @@ python compilar.py exemplos/demo_completa.por --save
 ## Recursos Técnicos
 
 - **Linguagem de Implementação:** Python 3.11+
-- **Paradigma:** Compilador de passagem única
+- **Paradigma:** Compilador modular de 6 fases
 - **Fases:**
-  1. Análise Léxica (Lexer)
-  2. Análise Sintática (Parser)
+  1. Análise Léxica (Lexer) + Expressões Regulares
+  2. Análise Sintática (Parser) + AFDs
   3. Análise Semântica (Semantic)
-  4. Geração de Código (CodeGen)
+  4. Geração de Código Intermediário (Intermediate) [Opcional]
+  5. Otimização (Optimizer) [Opcional]
+  6. Geração de Código Final (CodeGen)
 
-- **Saída:** Código Python executável
+- **Saída:** Código Python executável otimizado
+- **Otimizações:** 5 tipos implementados
+- **AFDs:** 3 autômatos educacionais

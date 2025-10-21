@@ -3,6 +3,59 @@ Analisador Léxico (Lexer) para a linguagem Portugol
 
 Este módulo implementa a análise léxica, convertendo o código fonte
 em uma sequência de tokens que serão processados pelo parser.
+
+EXPRESSÕES REGULARES DOS TOKENS:
+================================
+Os tokens são reconhecidos seguindo os seguintes padrões (ERs):
+
+1. IDENTIFICADORES:
+   ER: [a-zA-Z_][a-zA-Z0-9_]*
+   Descrição: Começa com letra ou underscore, seguido de letras, dígitos ou underscores
+   Exemplos: variavel, soma_total, _valor, contador1
+
+2. NÚMEROS INTEIROS:
+   ER: [0-9]+
+   Descrição: Um ou mais dígitos
+   Exemplos: 0, 42, 1234
+
+3. NÚMEROS REAIS:
+   ER: [0-9]+\.[0-9]+
+   Descrição: Um ou mais dígitos, ponto decimal, um ou mais dígitos
+   Exemplos: 3.14, 0.5, 123.456
+
+4. STRINGS (TEXTO):
+   ER: "[^"]*"
+   Descrição: Aspas duplas, zero ou mais caracteres não-aspas, aspas duplas
+   Exemplos: "Hello", "Texto com espaços", ""
+
+5. PALAVRAS-CHAVE:
+   ER: (se|entao|senao|fimse|enquanto|faca|fimenquanto|leia|escreva|...)
+   Descrição: Conjunto fixo de palavras reservadas da linguagem
+   Exemplos: se, enquanto, leia, escreva
+
+6. OPERADORES COMPOSTOS:
+   ER: (<=|>=|==|!=|<-)
+   Descrição: Operadores de dois caracteres
+   Exemplos: <=, >=, ==, !=, <-
+
+7. OPERADORES SIMPLES:
+   ER: [+\-*/><]
+   Descrição: Operadores aritméticos e relacionais de um caractere
+   Exemplos: +, -, *, /, <, >
+
+8. DELIMITADORES:
+   ER: [;,(){}]
+   Descrição: Símbolos de pontuação e delimitação
+   Exemplos: ;, ,, (, ), {, }
+
+9. COMENTÁRIOS:
+   - Linha: //[^\n]*
+   - Bloco: /\*.*?\*/
+   Descrição: Ignorados pelo analisador léxico
+   Exemplos: // comentário, /* bloco */
+
+NOTA: O lexer atual usa lógica imperativa direta (if/while) ao invés de
+um AFD explícito, mas os padrões acima definem formalmente cada token.
 """
 
 from typing import Dict, Optional

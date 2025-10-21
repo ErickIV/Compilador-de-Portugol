@@ -7,11 +7,15 @@ Uso:
 Opções:
     --debug         Exibe informações detalhadas de compilação
     --save          Salva o código Python gerado em arquivo
+    --intermediate  Mostra código intermediário (3 endereços)
+    --optimize      Aplica otimizações no código intermediário
+    --show-afd      Demonstra AFDs de reconhecimento de tokens
     
 Exemplos:
     python compilar.py programa.por
     python compilar.py programa.por --debug
-    python compilar.py programa.por --save
+    python compilar.py programa.por --intermediate --optimize
+    python compilar.py programa.por --show-afd
 """
 
 import sys
@@ -22,6 +26,9 @@ def main():
     arquivo_entrada = "programa.por"
     debug = False
     salvar = False
+    mostrar_intermediario = False
+    otimizar = False
+    mostrar_afd = False
     
     # Processar argumentos
     args = sys.argv[1:]
@@ -37,6 +44,12 @@ def main():
             debug = True
         elif arg == '--save':
             salvar = True
+        elif arg == '--intermediate':
+            mostrar_intermediario = True
+        elif arg == '--optimize':
+            otimizar = True
+        elif arg == '--show-afd':
+            mostrar_afd = True
         elif arg == '--help' or arg == '-h':
             print(__doc__)
             return 0
@@ -51,12 +64,26 @@ def main():
     print("-" * 50)
     
     try:
+        # Demonstração de AFD
+        if mostrar_afd:
+            from src.automaton import demonstrar_afd
+            demonstrar_afd()
+            print("\n")
+        
         # Criar compilador
-        compilador = CompiladorPortugol(debug=debug)
+        compilador = CompiladorPortugol(
+            debug=debug,
+            mostrar_intermediario=mostrar_intermediario,
+            otimizar=otimizar
+        )
         
         # Compilar e executar
         if debug:
             print("🔍 Modo debug ativado")
+        if mostrar_intermediario:
+            print("🔄 Código intermediário será exibido")
+        if otimizar:
+            print("⚡ Otimizações serão aplicadas")
         
         sucesso = compilador.compilar_arquivo(arquivo_entrada, salvar_arquivo=salvar)
         

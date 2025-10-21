@@ -8,6 +8,8 @@ __pycache__/
 *.pyo
 *.pyd
 
+#MD
+TCC.md
 # Virtual Environment
 venv/
 env/

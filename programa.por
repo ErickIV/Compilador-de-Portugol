@@ -1,5 +1,5 @@
-// Programa de exemplo simples - Arquivo padrão
-// Este é o arquivo executado por padrão quando você usa: python compilar.py
+/* Programa de exemplo simples - Arquivo padrão
+   Este é o arquivo executado por padrão quando você usa: python compilar.py */
 
 inteiro x, y, resultado;
 logico maior;
