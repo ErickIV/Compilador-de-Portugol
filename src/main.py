@@ -5,7 +5,14 @@ Este módulo orquestra todo o processo de compilação:
 1. Análise Léxica (Lexer)
 2. Análise Sintática (Parser) 
 3. Análise Semântica (Semantic)
-4. Geração de Código (CodeGen)
+4. Geração de Código Intermediário (Intermediate) [OPCIONAL]
+5. Otimização (Optimizer) [OPCIONAL]
+6. Geração de Código Final (CodeGen)
+
+Novas flags disponíveis:
+--intermediate : Gera e mostra código intermediário (3 endereços)
+--optimize     : Aplica otimizações no código intermediário
+--show-afd     : Demonstra AFD de reconhecimento de tokens
 """
 
 import sys
@@ -14,6 +21,8 @@ from .lexer import Lexer
 from .parser import Parser
 from .semantic import AnalisadorSemantico
 from .codegen import GeradorDeCodigo
+from .intermediate import GeradorCodigoIntermediario
+from .optimizer import OtimizadorCodigoIntermediario
 from .exceptions import CompiladorError
 
 
@@ -25,14 +34,19 @@ class CompiladorPortugol:
     unificada para o processo de compilação completo.
     """
     
-    def __init__(self, debug: bool = False):
+    def __init__(self, debug: bool = False, mostrar_intermediario: bool = False,
+                 otimizar: bool = False):
         """
         Inicializa o compilador
         
         Args:
             debug: Se True, imprime informações de debug
+            mostrar_intermediario: Se True, mostra código intermediário
+            otimizar: Se True, aplica otimizações
         """
         self.debug = debug
+        self.mostrar_intermediario = mostrar_intermediario
+        self.otimizar = otimizar
 
     def compilar_arquivo(self, caminho_arquivo: str, 
                         arquivo_saida: Optional[str] = None,
@@ -144,7 +158,51 @@ class CompiladorPortugol:
                 print("   ✓ Análise concluída")
                 print(f"   - Variáveis: {len(analisador_semantico.tabela_simbolos.simbolos)}")
             
-            # Fase 4: Geração de Código
+            # Fase 4 (OPCIONAL): Geração de Código Intermediário
+            codigo_intermediario = None
+            codigo_intermediario_otimizado = None
+            
+            if self.mostrar_intermediario or self.otimizar:
+                if self.debug:
+                    print("🔄 Geração de Código Intermediário")
+                
+                gerador_intermediario = GeradorCodigoIntermediario()
+                codigo_intermediario = gerador_intermediario.gerar(ast)
+                
+                if self.debug:
+                    print(f"   ✓ {len(codigo_intermediario)} instruções geradas")
+                
+                # Mostrar código intermediário original
+                if self.mostrar_intermediario and not self.otimizar:
+                    print("\n" + gerador_intermediario.imprimir_codigo())
+            
+            # Fase 5 (OPCIONAL): Otimização
+            if self.otimizar and codigo_intermediario:
+                if self.debug:
+                    print("⚡ Otimização de Código")
+                
+                otimizador = OtimizadorCodigoIntermediario()
+                codigo_intermediario_otimizado = otimizador.otimizar(codigo_intermediario)
+                
+                if self.debug:
+                    print(f"   ✓ Redução: {len(codigo_intermediario)} → {len(codigo_intermediario_otimizado)} instruções")
+                
+                # Mostrar relatório e código otimizado
+                if self.mostrar_intermediario:
+                    print("\n" + otimizador.relatorio_otimizacoes(
+                        codigo_intermediario, codigo_intermediario_otimizado))
+                    
+                    # Mostrar código original vs otimizado
+                    gerador_temp = GeradorCodigoIntermediario()
+                    gerador_temp.instrucoes = codigo_intermediario
+                    print("\nCÓDIGO INTERMEDIÁRIO ORIGINAL:")
+                    print(gerador_temp.imprimir_codigo())
+                    
+                    gerador_temp.instrucoes = codigo_intermediario_otimizado
+                    print("\nCÓDIGO INTERMEDIÁRIO OTIMIZADO:")
+                    print(gerador_temp.imprimir_codigo())
+            
+            # Fase 6: Geração de Código
             if self.debug:
                 print("⚙️  Geração de Código")
             
@@ -239,16 +297,43 @@ class CompiladorPortugol:
 def main():
     """Função principal para uso via linha de comando"""
     if len(sys.argv) < 2:
-        print("Uso: python -m src.main <arquivo.por> [--debug] [--save]")
-        print("Exemplo: python -m src.main programa.por --debug")
-        print("         python -m src.main programa.por --save  # Para salvar arquivo .py")
+        print("=" * 70)
+        print("COMPILADOR PORTUGOL")
+        print("=" * 70)
+        print("\nUso: python -m src.main <arquivo.por> [opções]")
+        print("\nOpções:")
+        print("  --debug          Mostra informações detalhadas de cada fase")
+        print("  --save           Salva o arquivo Python gerado")
+        print("  --tokens         Lista todos os tokens do código")
+        print("  --intermediate   Mostra código intermediário (3 endereços)")
+        print("  --optimize       Aplica otimizações no código intermediário")
+        print("  --show-afd       Demonstra AFDs de reconhecimento de tokens")
+        print("\nExemplos:")
+        print("  python -m src.main programa.por")
+        print("  python -m src.main programa.por --debug")
+        print("  python -m src.main programa.por --intermediate --optimize")
+        print("  python -m src.main programa.por --show-afd")
+        print("=" * 70)
         return
     
     arquivo_entrada = sys.argv[1]
     debug = '--debug' in sys.argv
     salvar = '--save' in sys.argv
+    mostrar_intermediario = '--intermediate' in sys.argv
+    otimizar = '--optimize' in sys.argv
+    mostrar_afd = '--show-afd' in sys.argv
     
-    compilador = CompiladorPortugol(debug=debug)
+    # Demonstração de AFD
+    if mostrar_afd:
+        from .automaton import demonstrar_afd
+        demonstrar_afd()
+        print("\n")
+    
+    compilador = CompiladorPortugol(
+        debug=debug,
+        mostrar_intermediario=mostrar_intermediario,
+        otimizar=otimizar
+    )
     
     if '--tokens' in sys.argv:
         # Modo de listagem de tokens
