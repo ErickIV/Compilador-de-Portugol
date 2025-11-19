@@ -35,7 +35,7 @@ from typing import List, Union, Optional
 from dataclasses import dataclass
 from .ast_nodes import (
     Programa, DeclaracaoVariavel,
-    Comando, Atribuicao, Condicional, Repeticao, Entrada, Saida,
+    Comando, Atribuicao, Condicional, Repeticao, RepeticaoPara, Entrada, Saida,
     Expressao, ExpressaoBinaria, ExpressaoUnaria, Literal, Variavel
 )
 
@@ -161,6 +161,8 @@ class GeradorCodigoIntermediario:
             self._gerar_condicional(comando)
         elif isinstance(comando, Repeticao):
             self._gerar_repeticao(comando)
+        elif isinstance(comando, RepeticaoPara):
+            self._gerar_repeticao_para(comando)
         elif isinstance(comando, Entrada):
             self._gerar_entrada(comando)
         elif isinstance(comando, Saida):
@@ -292,7 +294,88 @@ class GeradorCodigoIntermediario:
             tipo='LABEL',
             resultado=label_fim
         ))
-    
+
+    def _gerar_repeticao_para(self, repeticao: RepeticaoPara) -> None:
+        """
+        Gera código intermediário para loop 'para'
+
+        Estrutura:
+            variavel = inicio
+        L_inicio:
+            temp = variavel <= fim
+            ifFalse temp goto L_fim
+            [comandos]
+            variavel = variavel + passo
+            goto L_inicio
+        L_fim:
+        """
+        label_inicio = self.novo_label()
+        label_fim = self.novo_label()
+
+        # Inicializar variável
+        temp_inicio = self._gerar_expressao(repeticao.inicio)
+        self.adicionar_instrucao(InstrucaoIntermediaria(
+            tipo='ASSIGN',
+            resultado=repeticao.variavel,
+            operando1=temp_inicio
+        ))
+
+        # Label do início do loop
+        self.adicionar_instrucao(InstrucaoIntermediaria(
+            tipo='LABEL',
+            resultado=label_inicio
+        ))
+
+        # Avaliar condição (variavel <= fim)
+        temp_fim = self._gerar_expressao(repeticao.fim)
+        temp_condicao = self.novo_temporario()
+        self.adicionar_instrucao(InstrucaoIntermediaria(
+            tipo='OP',
+            resultado=temp_condicao,
+            operando1=repeticao.variavel,
+            operador='<=',
+            operando2=temp_fim
+        ))
+
+        # Se falso, sair do loop
+        self.adicionar_instrucao(InstrucaoIntermediaria(
+            tipo='IFFALSE',
+            resultado=label_fim,
+            operando1=temp_condicao
+        ))
+
+        # Comandos do loop
+        for comando in repeticao.comandos:
+            self._gerar_comando(comando)
+
+        # Incrementar variável
+        temp_passo = self._gerar_expressao(repeticao.passo)
+        temp_inc = self.novo_temporario()
+        self.adicionar_instrucao(InstrucaoIntermediaria(
+            tipo='OP',
+            resultado=temp_inc,
+            operando1=repeticao.variavel,
+            operador='+',
+            operando2=temp_passo
+        ))
+        self.adicionar_instrucao(InstrucaoIntermediaria(
+            tipo='ASSIGN',
+            resultado=repeticao.variavel,
+            operando1=temp_inc
+        ))
+
+        # Voltar para início
+        self.adicionar_instrucao(InstrucaoIntermediaria(
+            tipo='GOTO',
+            resultado=label_inicio
+        ))
+
+        # Label do fim
+        self.adicionar_instrucao(InstrucaoIntermediaria(
+            tipo='LABEL',
+            resultado=label_fim
+        ))
+
     def _gerar_entrada(self, entrada: Entrada) -> None:
         """Gera instrução de leitura"""
         self.adicionar_instrucao(InstrucaoIntermediaria(

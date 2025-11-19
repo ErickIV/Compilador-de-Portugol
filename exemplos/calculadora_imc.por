@@ -52,8 +52,8 @@ inicio
             se peso <= 0.0 ou peso > 500.0 entao
                 escreva("ERRO: Peso inválido!")
             senao
-                // Cálculo do IMC
-                imc <- peso / altura * altura
+                // Cálculo do IMC (IMC = peso / altura²)
+                imc <- peso / (altura * altura)
                 
                 // Determinação de status
                 eh_adulto <- idade >= 18

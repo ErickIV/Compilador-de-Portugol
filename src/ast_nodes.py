@@ -21,6 +21,9 @@ class TipoToken(Enum):
     FACA = "faca"
     FIMENQUANTO = "fimenquanto"
     PARA = "para"
+    DE = "de"
+    ATE = "ate"
+    PASSO = "passo"
     FIMPARA = "fimpara"
     LEIA = "leia"
     ESCREVA = "escreva"
@@ -46,6 +49,8 @@ class TipoToken(Enum):
     MENOS = "-"
     MULTIPLICACAO = "*"
     DIVISAO = "/"
+    MODULO = "%"
+    POTENCIA = "^"
     ATRIBUICAO = "<-"
     IGUAL = "=="
     DIFERENTE = "!="
@@ -132,6 +137,16 @@ class Condicional(Comando):
 class Repeticao(Comando):
     """Comando de repetição: enquanto-faca-fimenquanto"""
     condicao: Expressao
+    comandos: List[Comando]
+
+
+@dataclass
+class RepeticaoPara(Comando):
+    """Comando de repetição: para-de-ate-passo-faca-fimpara"""
+    variavel: str
+    inicio: Expressao
+    fim: Expressao
+    passo: Expressao
     comandos: List[Comando]
 
 

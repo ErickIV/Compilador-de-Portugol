@@ -7,8 +7,8 @@ convertendo a sequência de tokens em uma Árvore Sintática Abstrata (AST).
 
 from typing import List, Optional
 from .ast_nodes import (
-    TipoToken, Token, Programa, DeclaracaoVariavel, 
-    Comando, Atribuicao, Condicional, Repeticao, Entrada, Saida,
+    TipoToken, Token, Programa, DeclaracaoVariavel,
+    Comando, Atribuicao, Condicional, Repeticao, RepeticaoPara, Entrada, Saida,
     Expressao, ExpressaoBinaria, ExpressaoUnaria, Literal, Variavel
 )
 from .lexer import Lexer
@@ -117,6 +117,8 @@ class Parser:
             return self._analisar_condicional()
         elif self.token_atual.tipo == TipoToken.ENQUANTO:
             return self._analisar_repeticao()
+        elif self.token_atual.tipo == TipoToken.PARA:
+            return self._analisar_repeticao_para()
         elif self.token_atual.tipo == TipoToken.LEIA:
             return self._analisar_entrada()
         elif self.token_atual.tipo == TipoToken.ESCREVA:
@@ -171,15 +173,36 @@ class Parser:
         self._esperar_token(TipoToken.ENQUANTO)
         condicao = self._analisar_expressao()
         self._esperar_token(TipoToken.FACA)
-        
+
         comandos = []
         while self.token_atual.tipo != TipoToken.FIMENQUANTO:
             comando = self._analisar_comando()
             if comando:
                 comandos.append(comando)
-        
+
         self._esperar_token(TipoToken.FIMENQUANTO)
         return Repeticao(condicao, comandos)
+
+    def _analisar_repeticao_para(self) -> RepeticaoPara:
+        """Analisa comando de repetição: para variavel de inicio ate fim passo incremento faca comandos fimpara"""
+        self._esperar_token(TipoToken.PARA)
+        variavel = self._esperar_token(TipoToken.IDENTIFICADOR).lexema
+        self._esperar_token(TipoToken.DE)
+        inicio = self._analisar_expressao()
+        self._esperar_token(TipoToken.ATE)
+        fim = self._analisar_expressao()
+        self._esperar_token(TipoToken.PASSO)
+        passo = self._analisar_expressao()
+        self._esperar_token(TipoToken.FACA)
+
+        comandos = []
+        while self.token_atual.tipo != TipoToken.FIMPARA:
+            comando = self._analisar_comando()
+            if comando:
+                comandos.append(comando)
+
+        self._esperar_token(TipoToken.FIMPARA)
+        return RepeticaoPara(variavel, inicio, fim, passo, comandos)
 
     def _analisar_entrada(self) -> Entrada:
         """Analisa comando de entrada: leia(variavel)"""
@@ -276,17 +299,33 @@ class Parser:
 
     def _analisar_termo(self) -> Expressao:
         """
-        Analisa termo aritmético de multiplicação/divisão
-        termo -> fator ((* | /) fator)*
+        Analisa termo aritmético de multiplicação/divisão/módulo
+        termo -> potencia ((* | / | %) potencia)*
         """
-        esquerda = self._analisar_fator()
-        
-        while self.token_atual.tipo in {TipoToken.MULTIPLICACAO, TipoToken.DIVISAO}:
+        esquerda = self._analisar_potencia()
+
+        while self.token_atual.tipo in {TipoToken.MULTIPLICACAO, TipoToken.DIVISAO, TipoToken.MODULO}:
             operador = self.token_atual.lexema
             self._avancar()
-            direita = self._analisar_fator()
+            direita = self._analisar_potencia()
             esquerda = ExpressaoBinaria(esquerda, operador, direita)
-        
+
+        return esquerda
+
+    def _analisar_potencia(self) -> Expressao:
+        """
+        Analisa potenciação (associativa à direita)
+        potencia -> fator (^ fator)*
+        """
+        esquerda = self._analisar_fator()
+
+        if self.token_atual.tipo == TipoToken.POTENCIA:
+            operador = self.token_atual.lexema
+            self._avancar()
+            # Associatividade à direita: recursão
+            direita = self._analisar_potencia()
+            return ExpressaoBinaria(esquerda, operador, direita)
+
         return esquerda
 
     def _analisar_fator(self) -> Expressao:
