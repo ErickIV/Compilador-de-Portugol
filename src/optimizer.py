@@ -385,6 +385,10 @@ class OtimizadorCodigoIntermediario:
             resultado = val1 * val2
         elif operador == '/':
             resultado = val1 / val2
+        elif operador == '%':
+            resultado = val1 % val2
+        elif operador == '^':
+            resultado = val1 ** val2
         elif operador == '<':
             return 'true' if val1 < val2 else 'false'
         elif operador == '<=':
@@ -398,7 +402,7 @@ class OtimizadorCodigoIntermediario:
         elif operador == '!=':
             return 'true' if val1 != val2 else 'false'
         else:
-            raise ValueError(f"Operador desconhecido: {operador}")
+            raise ValueError(f"Operador '{operador}' não reconhecido")
         
         # Retornar inteiro se possível
         if isinstance(resultado, float) and resultado.is_integer():
