@@ -7,8 +7,8 @@ convertendo construções Portugol para código Python equivalente.
 
 from typing import List, Dict
 from .ast_nodes import (
-    Programa, DeclaracaoVariavel, 
-    Comando, Atribuicao, Condicional, Repeticao, Entrada, Saida,
+    Programa, DeclaracaoVariavel,
+    Comando, Atribuicao, Condicional, Repeticao, RepeticaoPara, Entrada, Saida,
     Expressao, ExpressaoBinaria, ExpressaoUnaria, Literal, Variavel
 )
 
@@ -102,6 +102,8 @@ class GeradorDeCodigo:
             self._gerar_condicional(comando)
         elif isinstance(comando, Repeticao):
             self._gerar_repeticao(comando)
+        elif isinstance(comando, RepeticaoPara):
+            self._gerar_repeticao_para(comando)
         elif isinstance(comando, Entrada):
             self._gerar_entrada(comando)
         elif isinstance(comando, Saida):
@@ -136,13 +138,40 @@ class GeradorDeCodigo:
         """Gera código para estrutura de repetição"""
         condicao_codigo = self._gerar_expressao(repeticao.condicao)
         self._adicionar_linha(f"while {condicao_codigo}:")
-        
+
         self._aumentar_indentacao()
         if repeticao.comandos:
             for comando in repeticao.comandos:
                 self._gerar_comando(comando)
         else:
             self._adicionar_linha("pass")
+        self._diminuir_indentacao()
+
+    def _gerar_repeticao_para(self, repeticao: RepeticaoPara) -> None:
+        """Gera código para estrutura de repetição 'para'"""
+        # Traduz para loop while para manter semântica clara
+        inicio_codigo = self._gerar_expressao(repeticao.inicio)
+        fim_codigo = self._gerar_expressao(repeticao.fim)
+        passo_codigo = self._gerar_expressao(repeticao.passo)
+
+        # Inicializar variável do loop
+        self._adicionar_linha(f"{repeticao.variavel} = {inicio_codigo}")
+
+        # Gerar condição do while baseada no passo
+        # Se passo é positivo: variavel <= fim
+        # Se passo é negativo: variavel >= fim
+        # Aqui assumimos passo positivo por simplicidade (pode ser melhorado)
+        self._adicionar_linha(f"while {repeticao.variavel} <= {fim_codigo}:")
+
+        self._aumentar_indentacao()
+        if repeticao.comandos:
+            for comando in repeticao.comandos:
+                self._gerar_comando(comando)
+        else:
+            self._adicionar_linha("pass")
+
+        # Incrementar variável
+        self._adicionar_linha(f"{repeticao.variavel} = {repeticao.variavel} + ({passo_codigo})")
         self._diminuir_indentacao()
 
     def _gerar_entrada(self, entrada: Entrada) -> None:
@@ -262,7 +291,9 @@ class GeradorDeCodigo:
             '+': '+',
             '-': '-',
             '*': '*',
-            '/': '/'
+            '/': '/',
+            '%': '%',
+            '^': '**'
         }
         
         operador_python = mapeamento_operadores.get(operador, operador)

@@ -50,9 +50,12 @@ Compilador-de-Portugol/
 │
 ├── 📂 exemplos/                 # Programas de demonstração
 │   ├── demo_completa.por        # 🚀 Demonstração completa (não-interativo)
-│   ├── calculadora_imc.por      # 💊 Calculadora de IMC (interativo)
+│   ├── calculadora_imc.por      # 💊 Calculadora de IMC (interativo) [BUG CORRIGIDO]
 │   ├── bubble_sort.por          # 🔢 Algoritmo de ordenação
-│   └── teste_otimizacoes.por    # ⚡ Teste de otimizações
+│   ├── teste_otimizacoes.por    # ⚡ Teste de otimizações
+│   ├── fibonacci.por            # 🔁 Sequência de Fibonacci (loop 'para') [NOVO]
+│   ├── fatorial.por             # 🧮 Fatorial e potenciação (^) [NOVO]
+│   └── teste_modulo.por         # ➗ Operador módulo (%) e paridade [NOVO]
 │
 ├── compilar.py                  # 🖥️  Interface CLI
 ├── programa.por                 # 📄 Programa exemplo
@@ -315,10 +318,15 @@ python compilar.py exemplos/teste_otimizacoes.por --debug --intermediate --optim
 
 ### ⚙️ **Operadores**
 
-**Aritméticos:** `+` `-` `*` `/`  
-**Relacionais:** `==` `!=` `<` `<=` `>` `>=`  
-**Lógicos:** `e` (and) | `ou` (or)  
+**Aritméticos:** `+` `-` `*` `/` `%` (módulo) `^` (potenciação)
+**Relacionais:** `==` `!=` `<` `<=` `>` `>=`
+**Lógicos:** `e` (and) | `ou` (or)
 **Atribuição:** `<-`
+
+**Exemplos:**
+- `10 % 3` → `1` (resto da divisão)
+- `2 ^ 8` → `256.0` (2 elevado a 8)
+- `x % 2 == 0` → verifica se x é par
 
 ### 🎛️ **Estruturas de Controle**
 
@@ -330,10 +338,20 @@ senao
     // comandos alternativos
 fimse
 
-// Repetição
+// Repetição - enquanto
 enquanto <condição> faca
     // comandos
 fimenquanto
+
+// Repetição - para (novo!)
+para variavel de inicio ate fim passo incremento faca
+    // comandos
+fimpara
+
+// Exemplo: loop de 1 a 10
+para i de 1 ate 10 passo 1 faca
+    escreva(i)
+fimpara
 ```
 
 ### 🔄 **Entrada e Saída**
@@ -397,21 +415,134 @@ Fases 4 e 5 são **opcionais** (ativadas com `--intermediate` e `--optimize`).
 
 ---
 
+## 📐 Gramática BNF Formal
+
+```bnf
+<programa> ::= <declaracoes> "inicio" <comandos> "fim"
+
+<declaracoes> ::= ( <declaracao> ";" )*
+
+<declaracao> ::= <tipo> <lista_vars>
+
+<tipo> ::= "inteiro" | "real" | "caracter" | "logico"
+
+<lista_vars> ::= IDENTIFICADOR ( "," IDENTIFICADOR )*
+
+<comandos> ::= ( <comando> )*
+
+<comando> ::= <atribuicao>
+            | <condicional>
+            | <repeticao>
+            | <repeticao_para>
+            | <entrada>
+            | <saida>
+
+<atribuicao> ::= IDENTIFICADOR "<-" <expressao>
+
+<condicional> ::= "se" <expressao> "entao" <comandos>
+                 [ "senao" <comandos> ] "fimse"
+
+<repeticao> ::= "enquanto" <expressao> "faca" <comandos> "fimenquanto"
+
+<repeticao_para> ::= "para" IDENTIFICADOR "de" <expressao>
+                     "ate" <expressao> "passo" <expressao>
+                     "faca" <comandos> "fimpara"
+
+<entrada> ::= "leia" "(" IDENTIFICADOR ")"
+
+<saida> ::= "escreva" "(" <lista_expr> ")"
+
+<lista_expr> ::= <expressao> ( "," <expressao> )*
+
+<expressao> ::= <expr_ou>
+
+<expr_ou> ::= <expr_e> ( "ou" <expr_e> )*
+
+<expr_e> ::= <expr_relacional> ( "e" <expr_relacional> )*
+
+<expr_relacional> ::= <expr_aritmetica>
+                     [ ( "==" | "!=" | "<" | "<=" | ">" | ">=" ) <expr_aritmetica> ]
+
+<expr_aritmetica> ::= <termo> ( ( "+" | "-" ) <termo> )*
+
+<termo> ::= <potencia> ( ( "*" | "/" | "%" ) <potencia> )*
+
+<potencia> ::= <fator> [ "^" <potencia> ]
+
+<fator> ::= NUMERO_INTEIRO
+          | NUMERO_REAL
+          | TEXTO
+          | "verdadeiro"
+          | "falso"
+          | IDENTIFICADOR
+          | "(" <expressao> ")"
+          | "-" <fator>
+```
+
+---
+
+## ⚠️ Limitações Conhecidas
+
+### **Limitações de Escopo Acadêmico**
+
+Este compilador foi desenvolvido para fins educacionais. As seguintes limitações são conhecidas:
+
+1. **Sem Suporte a Arrays/Vetores**
+   - Não há suporte para estruturas de dados compostas
+   - Apenas variáveis escalares são suportadas
+
+2. **Sem Funções/Procedimentos**
+   - Todo código deve estar no programa principal
+   - Não há suporte para modularização via funções
+
+3. **Escopo Global Único**
+   - Todas as variáveis são globais
+   - Não há blocos de escopo aninhados
+
+4. **Loop 'para' com Passo Fixo**
+   - A condição assume passo positivo (`<=`)
+   - Não detecta automaticamente direção (crescente/decrescente)
+
+5. **Tipos Estáticos Simples**
+   - Sem conversão automática complexa entre tipos
+   - Sem suporte a estruturas ou registros
+
+6. **Entrada/Saída Básica**
+   - `leia()` e `escreva()` são as únicas operações de I/O
+   - Sem acesso a arquivos ou sockets
+
+7. **Sem Tratamento de Exceções**
+   - Erros de runtime não são capturados
+   - Divisão por zero causará erro do Python
+
+8. **Otimizações Locais**
+   - Otimizações são intra-procedimentais
+   - Sem análise de fluxo de dados global
+
+### **Comportamento Específico**
+
+- **Divisão (`/`) e Potenciação (`^`)**: Sempre retornam `real` (float)
+- **Módulo (`%`)**: Pode retornar `real` se operandos forem reais
+- **Comparações**: Permitem comparar tipos diferentes (conversão implícita)
+- **Booleanos**: `verdadeiro` → `True`, `falso` → `False`
+
+---
+
 ## 📊 Estatísticas do Projeto
 
 | Métrica | Valor |
 |---------|-------|
-| **Linhas de código** | ~2.500 linhas |
+| **Linhas de código** | ~3.200 linhas |
 | **Módulos** | 10 arquivos principais |
 | **Fases de compilação** | 6 fases (4 obrigatórias + 2 opcionais) |
 | **Tipos suportados** | 4 tipos de dados |
-| **Operadores** | 13 operadores |
-| **Estruturas de controle** | 2 estruturas |
+| **Operadores** | 15 operadores (+, -, *, /, %, ^, ==, !=, <, <=, >, >=, e, ou, <-) |
+| **Estruturas de controle** | 3 estruturas (se-entao-senao, enquanto, para) |
 | **Otimizações implementadas** | 5 tipos |
-| **Exemplos incluídos** | 4 programas completos |
+| **Exemplos incluídos** | 7 programas completos |
 | **Cobertura de funcionalidades** | 100% |
 | **AFDs implementados** | 3 autômatos (identificador, inteiro, real) |
-| **Expressões Regulares** | 9 padrões documentados |
+| **Expressões Regulares** | 11 padrões documentados |
 
 ---
 

@@ -39,9 +39,9 @@ Os tokens são reconhecidos seguindo os seguintes padrões (ERs):
    Exemplos: <=, >=, ==, !=, <-
 
 7. OPERADORES SIMPLES:
-   ER: [+\-*/><]
+   ER: [+\-*/%^><]
    Descrição: Operadores aritméticos e relacionais de um caractere
-   Exemplos: +, -, *, /, <, >
+   Exemplos: +, -, *, /, %, ^, <, >
 
 8. DELIMITADORES:
    ER: [;,(){}]
@@ -90,6 +90,9 @@ class Lexer:
             'enquanto': TipoToken.ENQUANTO,
             'fimenquanto': TipoToken.FIMENQUANTO,
             'para': TipoToken.PARA,
+            'de': TipoToken.DE,
+            'ate': TipoToken.ATE,
+            'passo': TipoToken.PASSO,
             'fimpara': TipoToken.FIMPARA,
             'leia': TipoToken.LEIA,
             'escreva': TipoToken.ESCREVA,
@@ -297,6 +300,8 @@ class Lexer:
             '-': TipoToken.MENOS,
             '*': TipoToken.MULTIPLICACAO,
             '/': TipoToken.DIVISAO,
+            '%': TipoToken.MODULO,
+            '^': TipoToken.POTENCIA,
         }
 
         if caractere in simbolos_simples:

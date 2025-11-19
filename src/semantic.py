@@ -9,8 +9,8 @@ Este módulo implementa a análise semântica, verificando:
 
 from typing import Dict, Set, Any, Union
 from .ast_nodes import (
-    Programa, DeclaracaoVariavel, 
-    Comando, Atribuicao, Condicional, Repeticao, Entrada, Saida,
+    Programa, DeclaracaoVariavel,
+    Comando, Atribuicao, Condicional, Repeticao, RepeticaoPara, Entrada, Saida,
     Expressao, ExpressaoBinaria, ExpressaoUnaria, Literal, Variavel
 )
 from .exceptions import ErroSemantico
@@ -150,6 +150,8 @@ class AnalisadorSemantico:
             self._analisar_condicional(comando)
         elif isinstance(comando, Repeticao):
             self._analisar_repeticao(comando)
+        elif isinstance(comando, RepeticaoPara):
+            self._analisar_repeticao_para(comando)
         elif isinstance(comando, Entrada):
             self._analisar_entrada(comando)
         elif isinstance(comando, Saida):
@@ -201,7 +203,27 @@ class AnalisadorSemantico:
         if tipo_condicao != 'logico':
             # Permitir conversão implícita para booleano
             pass
-        
+
+        # Analisar comandos do loop
+        for comando in repeticao.comandos:
+            self._analisar_comando(comando)
+
+    def _analisar_repeticao_para(self, repeticao: RepeticaoPara) -> None:
+        """Analisa comando de repetição 'para'"""
+        # Verificar se variável foi declarada
+        self.tabela_simbolos.verificar_variavel_declarada(
+            repeticao.variavel,
+            0, 0
+        )
+
+        # Analisar expressões de início, fim e passo
+        self._analisar_expressao(repeticao.inicio)
+        self._analisar_expressao(repeticao.fim)
+        self._analisar_expressao(repeticao.passo)
+
+        # Marcar variável como inicializada
+        self.tabela_simbolos.marcar_como_inicializada(repeticao.variavel)
+
         # Analisar comandos do loop
         for comando in repeticao.comandos:
             self._analisar_comando(comando)
@@ -270,8 +292,8 @@ class AnalisadorSemantico:
         operador = expressao.operador
         
         # Operadores aritméticos
-        if operador in {'+', '-', '*'}:
-            if (tipo_esquerda in self.tipos_compativel_int_real and 
+        if operador in {'+', '-', '*', '%'}:
+            if (tipo_esquerda in self.tipos_compativel_int_real and
                 tipo_direita in self.tipos_compativel_int_real):
                 # Se um dos operandos é real, resultado é real
                 if tipo_esquerda == 'real' or tipo_direita == 'real':
@@ -282,12 +304,12 @@ class AnalisadorSemantico:
                     f"Operação aritmética '{operador}' incompatível entre '{tipo_esquerda}' e '{tipo_direita}'",
                     0, 0
                 )
-        
-        # Divisão sempre retorna real (comportamento do Python 3)
-        elif operador == '/':
-            if (tipo_esquerda in self.tipos_compativel_int_real and 
+
+        # Divisão e potenciação sempre retornam real (comportamento do Python 3)
+        elif operador in {'/', '^'}:
+            if (tipo_esquerda in self.tipos_compativel_int_real and
                 tipo_direita in self.tipos_compativel_int_real):
-                return 'real'  # Divisão sempre retorna real
+                return 'real'  # Divisão e potenciação sempre retornam real
             else:
                 raise ErroSemantico(
                     f"Operação aritmética '{operador}' incompatível entre '{tipo_esquerda}' e '{tipo_direita}'",
