@@ -125,6 +125,21 @@ Traduz a AST para **código Python** executável.
 
 ---
 
+## 📥 Instalação
+
+```bash
+# Clone o repositório
+git clone https://github.com/ErickIV/Compilador-de-Portugol.git
+cd Compilador-de-Portugol
+
+# Verificar versão do Python (requer 3.11+)
+python --version
+```
+
+**Pronto!** O compilador usa apenas a biblioteca padrão do Python, não requer instalação de dependências.
+
+---
+
 ## 🚀 Como Usar
 
 ### 💻 **Método 1: Interface CLI (Recomendado)**
@@ -142,7 +157,7 @@ python compilar.py programa.por --save
 # 🆕 Mostrar código intermediário (3 endereços)
 python compilar.py programa.por --intermediate
 
-# 🆕 Aplicar otimizações + mostrar antes/depois
+# 🆕 Aplicar otimizações + mostrar antes/depois (requer --intermediate)
 python compilar.py programa.por --intermediate --optimize
 
 # 🆕 Demonstrar AFDs de reconhecimento de tokens
@@ -157,7 +172,7 @@ python compilar.py programa.por --debug --intermediate --optimize
 | Flag | Descrição | Exemplo de Uso |
 |------|-----------|----------------|
 | `--intermediate` | Mostra código intermediário de 3 endereços | `python compilar.py teste.por --intermediate` |
-| `--optimize` | Aplica otimizações (constant folding, etc.) | `python compilar.py teste.por --optimize` |
+| `--optimize` | Aplica otimizações (requer `--intermediate`) | `python compilar.py teste.por --intermediate --optimize` |
 | `--show-afd` | Demonstra AFDs para tokens (educacional) | `python compilar.py teste.por --show-afd` |
 | `--debug` | Mostra todas as fases detalhadamente | `python compilar.py teste.por --debug` |
 | `--save` | Salva arquivo .py gerado | `python compilar.py teste.por --save` |
@@ -275,6 +290,48 @@ python compilar.py exemplos/teste_otimizacoes.por --intermediate --optimize
 - Código intermediário original (antes das otimizações)
 - Código intermediário otimizado (depois das otimizações)
 - Relatório comparativo mostrando redução de instruções
+
+### 🔁 **5. Fibonacci** (`exemplos/fibonacci.por`) [NOVO]
+Demonstra o loop 'para' com a sequência de Fibonacci.
+
+**Execução:**
+```bash
+python compilar.py exemplos/fibonacci.por
+```
+
+**Destaques:**
+- ✅ Loop 'para' com passo personalizado
+- ✅ Cálculo iterativo de Fibonacci
+- ✅ Demonstração de acumuladores
+- ✅ Operações com múltiplas variáveis
+
+### 🧮 **6. Fatorial e Potenciação** (`exemplos/fatorial.por`) [NOVO]
+Demonstra operador de potenciação e cálculo de fatorial.
+
+**Execução:**
+```bash
+python compilar.py exemplos/fatorial.por
+```
+
+**Destaques:**
+- ✅ Operador de potenciação (`^`)
+- ✅ Cálculo de fatorial com loop 'para'
+- ✅ Operações matemáticas complexas
+- ✅ Múltiplos exemplos de potências
+
+### ➗ **7. Teste de Módulo** (`exemplos/teste_modulo.por`) [NOVO]
+Demonstra o operador módulo (%) e verificação de paridade.
+
+**Execução:**
+```bash
+python compilar.py exemplos/teste_modulo.por
+```
+
+**Destaques:**
+- ✅ Operador módulo (`%`)
+- ✅ Verificação de números pares/ímpares
+- ✅ Condicionais com operações matemáticas
+- ✅ Demonstração prática de resto de divisão
 
 ---
 
@@ -399,6 +456,8 @@ graph LR
     F --> G[🐍 CodeGen]
     G --> H[✨ Python]
 ```
+
+> **Nota:** Se o diagrama acima não for renderizado, você está visualizando em um leitor que não suporta Mermaid. Veja o repositório no GitHub para visualização completa.
 
 **Fluxo detalhado:**
 
@@ -528,11 +587,54 @@ Este compilador foi desenvolvido para fins educacionais. As seguintes limitaçõ
 
 ---
 
+## ❓ Problemas Comuns
+
+### **Erro: "python: command not found"**
+**Solução:** Use `python3` ao invés de `python` no Linux/macOS.
+```bash
+python3 compilar.py programa.por
+```
+
+### **Erro: versão do Python incompatível**
+**Solução:** Este compilador requer Python 3.11 ou superior. Verifique sua versão:
+```bash
+python --version
+```
+Se necessário, instale uma versão mais recente do Python.
+
+### **Erro na execução de programas interativos**
+**Solução:** Certifique-se de estar executando em um terminal interativo, não em uma IDE ou ambiente não-interativo.
+```bash
+# Execute diretamente no terminal/prompt de comando
+python compilar.py exemplos/calculadora_imc.por
+```
+
+### **Código gerado não executa corretamente**
+**Solução:** Use o modo `--debug` para ver todas as fases da compilação e identificar onde está o problema:
+```bash
+python compilar.py programa.por --debug
+```
+
+### **Erro de sintaxe no código Portugol**
+**Solução:** Verifique:
+- Se todas as variáveis foram declaradas antes do `inicio`
+- Se você está usando `<-` para atribuição (não `=`)
+- Se todas as estruturas têm seus fechamentos (`fimse`, `fimenquanto`, `fimpara`)
+- Se há ponto-e-vírgula (`;`) após cada declaração de variável
+
+### **Otimizações não aparecem**
+**Solução:** A flag `--optimize` requer `--intermediate`:
+```bash
+python compilar.py programa.por --intermediate --optimize
+```
+
+---
+
 ## 📊 Estatísticas do Projeto
 
 | Métrica | Valor |
 |---------|-------|
-| **Linhas de código** | ~3.200 linhas |
+| **Linhas de código** | ~2.500 linhas |
 | **Módulos** | 10 arquivos principais |
 | **Fases de compilação** | 6 fases (4 obrigatórias + 2 opcionais) |
 | **Tipos suportados** | 4 tipos de dados |
@@ -546,10 +648,67 @@ Este compilador foi desenvolvido para fins educacionais. As seguintes limitaçõ
 
 ---
 
-## �️ Requisitos
+## 💻 Requisitos
 
 - **Python 3.11+**
 - Nenhuma dependência externa (usa apenas biblioteca padrão)
+
+---
+
+## 🤝 Contribuindo
+
+Este é um projeto acadêmico, mas contribuições são bem-vindas!
+
+### **Como contribuir:**
+
+1. **Fork o repositório**
+   ```bash
+   # Clique em "Fork" no GitHub
+   ```
+
+2. **Clone seu fork**
+   ```bash
+   git clone https://github.com/seu-usuario/Compilador-de-Portugol.git
+   cd Compilador-de-Portugol
+   ```
+
+3. **Crie uma branch para sua feature**
+   ```bash
+   git checkout -b feature/nova-funcionalidade
+   ```
+
+4. **Faça suas alterações e commit**
+   ```bash
+   git add .
+   git commit -m "Adiciona nova funcionalidade X"
+   ```
+
+5. **Push para seu fork**
+   ```bash
+   git push origin feature/nova-funcionalidade
+   ```
+
+6. **Abra um Pull Request**
+   - Vá até o repositório original no GitHub
+   - Clique em "Pull Request"
+   - Descreva suas alterações detalhadamente
+
+### **Áreas para contribuição:**
+
+- 🐛 Correção de bugs
+- ✨ Novas funcionalidades (arrays, funções, etc.)
+- 📚 Melhorias na documentação
+- 🧪 Adição de testes
+- ⚡ Novas otimizações
+- 🎨 Melhorias na geração de código
+- 📝 Novos exemplos de programas
+
+### **Diretrizes:**
+
+- Mantenha a arquitetura modular existente
+- Documente seu código adequadamente
+- Teste suas alterações antes de submeter
+- Siga o estilo de código do projeto
 
 ---
 
