@@ -35,7 +35,7 @@ class CompiladorPortugol:
     """
     
     def __init__(self, debug: bool = False, mostrar_intermediario: bool = False,
-                 otimizar: bool = False):
+                 otimizar: bool = False, debug_pro: bool = False):
         """
         Inicializa o compilador
         
@@ -47,6 +47,8 @@ class CompiladorPortugol:
         self.debug = debug
         self.mostrar_intermediario = mostrar_intermediario
         self.otimizar = otimizar
+        # debug_pro: modo de debug passo-a-passo (muito verboso)
+        self.debug_pro = debug_pro
 
     def compilar_arquivo(self, caminho_arquivo: str, 
                         arquivo_saida: Optional[str] = None,
@@ -130,7 +132,7 @@ class CompiladorPortugol:
             if self.debug:
                 print("🔍 Análise Léxica")
             
-            lexer = Lexer(codigo_fonte)
+            lexer = Lexer(codigo_fonte, debug_pro=self.debug_pro)
             
             if self.debug:
                 print("   ✓ Lexer inicializado")
@@ -151,7 +153,7 @@ class CompiladorPortugol:
             if self.debug:
                 print("🔬 Análise Semântica")
             
-            analisador_semantico = AnalisadorSemantico()
+            analisador_semantico = AnalisadorSemantico(debug_pro=self.debug_pro)
             analisador_semantico.analisar(ast)
             
             if self.debug:
@@ -166,7 +168,7 @@ class CompiladorPortugol:
                 if self.debug:
                     print("🔄 Geração de Código Intermediário")
                 
-                gerador_intermediario = GeradorCodigoIntermediario()
+                gerador_intermediario = GeradorCodigoIntermediario(debug_pro=self.debug_pro)
                 codigo_intermediario = gerador_intermediario.gerar(ast)
                 
                 if self.debug:
@@ -181,7 +183,7 @@ class CompiladorPortugol:
                 if self.debug:
                     print("⚡ Otimização de Código")
                 
-                otimizador = OtimizadorCodigoIntermediario()
+                otimizador = OtimizadorCodigoIntermediario(debug_pro=self.debug_pro)
                 codigo_intermediario_otimizado = otimizador.otimizar(codigo_intermediario)
                 
                 if self.debug:
@@ -206,7 +208,7 @@ class CompiladorPortugol:
             if self.debug:
                 print("⚙️  Geração de Código")
             
-            gerador = GeradorDeCodigo()
+            gerador = GeradorDeCodigo(debug_pro=self.debug_pro)
             codigo_python = gerador.gerar(ast)
             
             if self.debug:

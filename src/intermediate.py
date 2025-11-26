@@ -98,6 +98,13 @@ class GeradorCodigoIntermediario:
         self.instrucoes: List[InstrucaoIntermediaria] = []
         self.contador_temporarios = 0
         self.contador_labels = 0
+        self.debug_pro = False
+
+    def __init__(self, debug_pro: bool = False):
+        self.instrucoes: List[InstrucaoIntermediaria] = []
+        self.contador_temporarios = 0
+        self.contador_labels = 0
+        self.debug_pro = debug_pro
     
     def novo_temporario(self) -> str:
         """Gera um novo nome de variável temporária"""
@@ -112,6 +119,8 @@ class GeradorCodigoIntermediario:
     def adicionar_instrucao(self, instrucao: InstrucaoIntermediaria) -> None:
         """Adiciona uma instrução à lista"""
         self.instrucoes.append(instrucao)
+        if self.debug_pro:
+            print(f"[IR] adiciona instrucao: {instrucao}")
     
     def gerar(self, programa: Programa) -> List[InstrucaoIntermediaria]:
         """
@@ -184,11 +193,12 @@ class GeradorCodigoIntermediario:
         temp_expr = self._gerar_expressao(atribuicao.expressao)
         
         # Atribuir resultado à variável
-        self.adicionar_instrucao(InstrucaoIntermediaria(
+        instr = InstrucaoIntermediaria(
             tipo='ASSIGN',
             resultado=atribuicao.variavel,
             operando1=temp_expr
-        ))
+        )
+        self.adicionar_instrucao(instr)
     
     def _gerar_condicional(self, condicional: Condicional) -> None:
         """

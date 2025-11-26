@@ -74,12 +74,13 @@ class Lexer:
     - Rastrear posição (linha/coluna) para relatórios de erro
     """
     
-    def __init__(self, codigo_fonte: str):
+    def __init__(self, codigo_fonte: str, debug_pro: bool = False):
         self.codigo_fonte = codigo_fonte
         self.tamanho_codigo = len(codigo_fonte)
         self.posicao_atual = 0
         self.linha = 1
         self.coluna = 1
+        self.debug_pro = debug_pro
         
         # Mapeamento de palavras-chave para tipos de token
         self.palavras_chave: Dict[str, TipoToken] = {
@@ -130,6 +131,8 @@ class Lexer:
         """Ignora espaços em branco e comentários"""
         while self.posicao_atual < self.tamanho_codigo:
             caractere = self._caractere_atual()
+            if self.debug_pro:
+                print(f"[LEXER] processando char '{caractere}' (pos={self.posicao_atual} L{self.linha}:C{self.coluna})")
             
             # Espaços em branco
             if caractere.isspace():
@@ -274,15 +277,24 @@ class Lexer:
 
         # Identificadores e palavras-chave
         if caractere.isalpha() or caractere == '_':
-            return self._ler_identificador_ou_palavra_chave()
+            token = self._ler_identificador_ou_palavra_chave()
+            if self.debug_pro:
+                print(f"[LEXER] reconheceu token {token.tipo} lexema='{token.lexema}' L{token.linha}:C{token.coluna}")
+            return token
 
         # Números
         if caractere.isdigit():
-            return self._ler_numero()
+            token = self._ler_numero()
+            if self.debug_pro:
+                print(f"[LEXER] reconheceu token {token.tipo} lexema='{token.lexema}' L{token.linha}:C{token.coluna}")
+            return token
 
         # Strings
         if caractere == '"':
-            return self._ler_string()
+            token = self._ler_string()
+            if self.debug_pro:
+                print(f"[LEXER] reconheceu token {token.tipo} lexema='{token.lexema}' L{token.linha}:C{token.coluna}")
+            return token
 
         # Operadores compostos
         if caractere in ['<', '>', '=', '!']:
@@ -320,7 +332,10 @@ class Lexer:
 
         if caractere in simbolos_simples:
             self._avancar()
-            return Token(simbolos_simples[caractere], caractere, self.linha, pos_inicial_coluna)
+            token = Token(simbolos_simples[caractere], caractere, self.linha, pos_inicial_coluna)
+            if self.debug_pro:
+                print(f"[LEXER] reconheceu token {token.tipo} lexema='{token.lexema}' L{token.linha}:C{token.coluna}")
+            return token
 
         # Caractere não reconhecido
         raise ErroLexico(f"Caractere inesperado '{caractere}'", self.linha, pos_inicial_coluna)

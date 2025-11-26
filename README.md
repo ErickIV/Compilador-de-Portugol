@@ -23,6 +23,7 @@ Este projeto implementa um **compilador completo** para a linguagem **Portugol**
 ### ✨ **Novidades - Versão 2.1**
 
 🚀 **Fases Completas de Compilação:**
+
 - ✅ Análise Léxica com Expressões Regulares documentadas
 - ✅ Autômatos Finitos Determinísticos (AFD) explícitos
 - ✅ Geração de Código Intermediário (3 endereços)
@@ -30,12 +31,14 @@ Este projeto implementa um **compilador completo** para a linguagem **Portugol**
 - ✅ Comparação de código antes/depois das otimizações
 
 🔥 **Correções e Melhorias Críticas:**
+
 - ✅ **BUG CRÍTICO CORRIGIDO:** Loops com passo negativo agora funcionam corretamente
 - ✅ **NOVA FEATURE:** Cláusula `passo` opcional no loop `para` (padrão = 1)
 - ✅ Tratamento completo de caracteres de escape em strings (`\"`, `\\`, `\n`)
 - ✅ Documentação corrigida e atualizada
 
 🧪 **Suite de Testes Profissional:**
+
 - ✅ **98 testes automatizados** cobrindo todas as fases
 - ✅ **~80% de cobertura** de código
 - ✅ Testes unitários, de integração e end-to-end
@@ -89,9 +92,11 @@ Compilador-de-Portugol/
 ## 🏗️ Arquitetura Modular
 
 ### 🔤 **1. Análise Léxica** (`lexer.py` + `automaton.py`)
+
 Transforma o código fonte em **tokens** (unidades léxicas).
 
 **Funcionalidades:**
+
 - ✅ Reconhece palavras-chave (`inicio`, `fim`, `se`, `enquanto`, `para`, etc.)
 - ✅ Identifica operadores aritméticos (`+`, `-`, `*`, `/`, `%`, `^`)
 - ✅ Identifica operadores relacionais (`==`, `!=`, `<`, `<=`, `>`, `>=`)
@@ -104,6 +109,7 @@ Transforma o código fonte em **tokens** (unidades léxicas).
 - ✨ **NOVO:** AFDs explícitos para reconhecimento educacional
 
 **Exemplo de Token:**
+
 ```python
 Token(tipo=TipoToken.INTEIRO, lexema="42", linha=5, coluna=12)
 ```
@@ -111,9 +117,11 @@ Token(tipo=TipoToken.INTEIRO, lexema="42", linha=5, coluna=12)
 ---
 
 ### 📝 **2. Análise Sintática** (`parser.py`)
+
 Constrói a **Árvore Sintática Abstrata (AST)** a partir dos tokens.
 
 **Funcionalidades:**
+
 - ✅ Parser de descida recursiva
 - ✅ Verifica estrutura gramatical do programa
 - ✅ Valida declarações de variáveis
@@ -122,6 +130,7 @@ Constrói a **Árvore Sintática Abstrata (AST)** a partir dos tokens.
 - ✨ **NOVO:** Cláusula `passo` opcional no loop `para` (padrão = 1)
 
 **Exemplo de Sintaxe (Loop Para):**
+
 ```portugol
 // Antes (v2.0): passo obrigatório
 para i de 1 ate 10 passo 1 faca
@@ -142,9 +151,11 @@ fimpara
 ---
 
 ### ✅ **3. Análise Semântica** (`semantic.py`)
+
 Valida o **significado** do programa.
 
 **Funcionalidades:**
+
 - ✅ Verifica se variáveis foram declaradas antes do uso
 - ✅ Valida compatibilidade de tipos em operações
 - ✅ Detecta variáveis não inicializadas (warnings)
@@ -152,6 +163,7 @@ Valida o **significado** do programa.
 - ✅ Verifica coerência lógica
 
 **Exemplo de Validação:**
+
 ```portugol
 inteiro x;
 inicio
@@ -162,15 +174,18 @@ fim
 ---
 
 ### 🔄 **4. Geração de Código Intermediário** (`intermediate.py`)
+
 Gera representação de **3 endereços** para facilitar otimizações.
 
 **Funcionalidades:**
+
 - ✅ Linearização da AST em instruções sequenciais
 - ✅ Cada instrução tem no máximo 3 operandos
 - ✅ Suporta labels e saltos condicionais
 - ✅ Base para aplicação de otimizações
 
 **Exemplo:**
+
 ```
 Portugol:                  Código Intermediário:
 inteiro a, b, c;          a = 5
@@ -184,26 +199,29 @@ fim
 ---
 
 ### ⚡ **5. Otimização** (`optimizer.py`)
+
 Aplica transformações que preservam semântica mas melhoram desempenho.
 
 **Técnicas Implementadas:**
 
-| Otimização | Descrição | Exemplo |
-|------------|-----------|---------|
-| 🔢 **Constant Folding** | Avalia constantes em tempo de compilação | `x <- 2 + 3` → `x <- 5` |
-| 🔄 **Constant Propagation** | Substitui variáveis por valores conhecidos | `x <- 5; y <- x` → `y <- 5` |
-| ➕ **Algebraic Simplification** | Aplica identidades matemáticas | `x <- y + 0` → `x <- y` |
-| 📋 **Copy Propagation** | Elimina cópias desnecessárias | `a <- b; c <- a` → `c <- b` |
-| 🗑️ **Dead Code Elimination** | Remove código não utilizado | Remove variáveis não referenciadas |
+| Otimização                      | Descrição                                  | Exemplo                            |
+| ------------------------------- | ------------------------------------------ | ---------------------------------- |
+| 🔢 **Constant Folding**         | Avalia constantes em tempo de compilação   | `x <- 2 + 3` → `x <- 5`            |
+| 🔄 **Constant Propagation**     | Substitui variáveis por valores conhecidos | `x <- 5; y <- x` → `y <- 5`        |
+| ➕ **Algebraic Simplification** | Aplica identidades matemáticas             | `x <- y + 0` → `x <- y`            |
+| 📋 **Copy Propagation**         | Elimina cópias desnecessárias              | `a <- b; c <- a` → `c <- b`        |
+| 🗑️ **Dead Code Elimination**    | Remove código não utilizado                | Remove variáveis não referenciadas |
 
 **Redução de Código:** Até **29.7%** com otimizações ativas!
 
 ---
 
 ### 🐍 **6. Geração de Código Final** (`codegen.py`)
+
 Traduz a AST para **código Python** executável.
 
 **Funcionalidades:**
+
 - ✅ Converte tipos Portugol → Python (`inteiro` → `int`, `caracter` → `str`)
 - ✅ Traduz estruturas de controle (`se-entao` → `if-else`, `enquanto` → `while`)
 - ✅ Implementa entrada/saída (`leia()` → `input()`, `escreva()` → `print()`)
@@ -212,6 +230,7 @@ Traduz a AST para **código Python** executável.
 - ✨ **BUG CRÍTICO CORRIGIDO:** Condição dinâmica para loops com passo negativo
 
 **Exemplo de Tradução (Loop Reverso):**
+
 ```portugol
 // Portugol
 inteiro i;
@@ -287,15 +306,34 @@ python compilar.py programa.por --debug --intermediate --optimize
 
 ### 📊 **Flags Disponíveis**
 
-| Flag | Descrição | Exemplo |
-|------|-----------|---------|
-| `--intermediate` | Mostra código intermediário de 3 endereços | `python compilar.py teste.por --intermediate` |
-| `--optimize` | Aplica otimizações (requer `--intermediate`) | `python compilar.py teste.por --intermediate --optimize` |
-| `--show-afd` | Demonstra AFDs para tokens (educacional) | `python compilar.py teste.por --show-afd` |
-| `--debug` | Mostra todas as fases detalhadamente | `python compilar.py teste.por --debug` |
-| `--save` | Salva arquivo .py gerado | `python compilar.py teste.por --save` |
+| Flag             | Descrição                                                                                                                                                                                                                 | Exemplo                                                  |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `--intermediate` | Mostra código intermediário de 3 endereços                                                                                                                                                                                | `python compilar.py teste.por --intermediate`            |
+| `--optimize`     | Aplica otimizações (requer `--intermediate`)                                                                                                                                                                              | `python compilar.py teste.por --intermediate --optimize` |
+| `--show-afd`     | Demonstra AFDs para tokens (educacional)                                                                                                                                                                                  | `python compilar.py teste.por --show-afd`                |
+| `--debug`        | Mostra todas as fases detalhadamente                                                                                                                                                                                      | `python compilar.py teste.por --debug`                   |
+| `--save`         | Salva arquivo .py gerado                                                                                                                                                                                                  | `python compilar.py teste.por --save`                    |
+| `--debugpro`     | Modo de debug passo-a-passo (muito verboso): mostra processamento caractere-a-caractere no lexer, tokens reconhecidos, avanço do parser, passos da análise semântica, instruções adicionadas ao IR e passos do otimizador | `python compilar.py teste.por --debugpro`                |
 
 ---
+
+**Sobre `--debugpro`:**
+
+- `--debugpro` é um modo de depuração extremamente verboso pensado para fins educacionais e diagnóstico. Quando ativado, o compilador imprime:
+
+  - O lexer processando cada caractere e mensagens quando tokens são reconhecidos;
+  - O parser mostrando avanços e consumo de tokens (token-a-token);
+  - Mensagens da análise semântica para declarações e comandos analisados;
+  - Cada instrução criada no código intermediário (IR) enquanto a IR é gerada;
+  - Passos e relatórios do otimizador durante as passadas de transformação.
+
+- Use `--debugpro` para entender internamente como cada fase funciona ou para depurar casos complexos. A saída pode ser muito extensa; combine com redirecionamento para arquivo quando necessário:
+
+```powershell
+python compilar.py exemplos/demo_completa.por --debugpro > debug_pro_output.txt
+```
+
+-- Para inspeção menos verbosa, prefira `--debug` (mostra resumo das fases) ou `--intermediate` (mostra IR).
 
 ### 🐍 **Método 2: Como Módulo Python**
 
@@ -337,6 +375,7 @@ python -m pytest tests/ --cov=src --cov-report=html
 ```
 
 **Suite de Testes:**
+
 - ✅ `test_lexer.py` - Testes do analisador léxico
 - ✅ `test_parser.py` - 35 testes do parser (incluindo passo opcional)
 - ✅ `test_semantic.py` - 26 testes de análise semântica
@@ -349,16 +388,17 @@ python -m pytest tests/ --cov=src --cov-report=html
 
 ### 🔤 **Tipos de Dados**
 
-| Tipo | Descrição | Exemplo | Python Equivalente |
-|------|-----------|---------|-------------------|
-| `inteiro` | Números inteiros | `42`, `-10` | `int` |
-| `real` | Números decimais | `3.14`, `-0.5` | `float` |
-| `caracter` | Strings de texto | `"Olá mundo"` | `str` |
-| `logico` | Booleanos | `verdadeiro`, `falso` | `bool` |
+| Tipo       | Descrição        | Exemplo               | Python Equivalente |
+| ---------- | ---------------- | --------------------- | ------------------ |
+| `inteiro`  | Números inteiros | `42`, `-10`           | `int`              |
+| `real`     | Números decimais | `3.14`, `-0.5`        | `float`            |
+| `caracter` | Strings de texto | `"Olá mundo"`         | `str`              |
+| `logico`   | Booleanos        | `verdadeiro`, `falso` | `bool`             |
 
 ### 🎯 **Operadores**
 
 **Aritméticos:**
+
 - `+` Adição
 - `-` Subtração
 - `*` Multiplicação
@@ -367,6 +407,7 @@ python -m pytest tests/ --cov=src --cov-report=html
 - `^` Potenciação
 
 **Relacionais:**
+
 - `==` Igual
 - `!=` Diferente
 - `<` Menor que
@@ -375,6 +416,7 @@ python -m pytest tests/ --cov=src --cov-report=html
 - `>=` Maior ou igual
 
 **Lógicos:**
+
 - `e` AND lógico
 - `ou` OR lógico
 - `nao` NOT lógico
@@ -382,6 +424,7 @@ python -m pytest tests/ --cov=src --cov-report=html
 ### 📝 **Estruturas de Controle**
 
 **Condicional:**
+
 ```portugol
 se condicao entao
     // comandos
@@ -391,6 +434,7 @@ fimse
 ```
 
 **Loop Enquanto:**
+
 ```portugol
 enquanto condicao faca
     // comandos
@@ -398,6 +442,7 @@ fimenquanto
 ```
 
 **Loop Para (com passo opcional):**
+
 ```portugol
 // Passo positivo (padrão = 1)
 para i de 1 ate 10 faca
@@ -516,6 +561,7 @@ fim
 ## 🔍 Exemplo de Execução Detalhada
 
 ### Arquivo: `teste.por`
+
 ```portugol
 inteiro x, y;
 inicio
@@ -591,14 +637,14 @@ O projeto inclui uma suite completa de **98 testes** organizados por fase:
 
 ### 📊 **Estatísticas de Testes**
 
-| Arquivo | Testes | Descrição |
-|---------|--------|-----------|
-| `test_lexer.py` | 3 | Tokenização e escape de strings |
-| `test_parser.py` | 35 | Construção da AST, passo opcional |
-| `test_semantic.py` | 26 | Validação semântica e tipos |
-| `test_codegen.py` | 23 | Geração de código, loops reversos |
-| `test_integration.py` | 14 | Pipeline completo end-to-end |
-| **TOTAL** | **98** | **~80% de cobertura** |
+| Arquivo               | Testes | Descrição                         |
+| --------------------- | ------ | --------------------------------- |
+| `test_lexer.py`       | 3      | Tokenização e escape de strings   |
+| `test_parser.py`      | 35     | Construção da AST, passo opcional |
+| `test_semantic.py`    | 26     | Validação semântica e tipos       |
+| `test_codegen.py`     | 23     | Geração de código, loops reversos |
+| `test_integration.py` | 14     | Pipeline completo end-to-end      |
+| **TOTAL**             | **98** | **~80% de cobertura**             |
 
 ### 🔧 **Fixtures Disponíveis** (`conftest.py`)
 
@@ -619,6 +665,7 @@ def codigo_passo_opcional():
 ### ✅ **Testes Críticos**
 
 **Loop com Passo Negativo:**
+
 ```python
 def test_execucao_loop_negativo():
     """Testa que loop reverso executa corretamente"""
@@ -637,6 +684,7 @@ def test_execucao_loop_negativo():
 ```
 
 **Passo Opcional:**
+
 ```python
 def test_repeticao_para_sem_passo():
     """Testa loop sem passo explícito (deve usar 1)"""
@@ -657,16 +705,16 @@ def test_repeticao_para_sem_passo():
 
 ## 📊 Métricas do Projeto
 
-| Métrica | Valor |
-|---------|-------|
-| **Linhas de Código** | ~3.500 |
-| **Módulos** | 10 |
-| **Testes** | 98 |
-| **Cobertura de Testes** | ~80% |
-| **Fases de Compilação** | 6 |
-| **Otimizações** | 5 tipos |
-| **Exemplos** | 9 programas |
-| **Redução Máxima de Código** | 29.7% |
+| Métrica                      | Valor       |
+| ---------------------------- | ----------- |
+| **Linhas de Código**         | ~3.500      |
+| **Módulos**                  | 10          |
+| **Testes**                   | 98          |
+| **Cobertura de Testes**      | ~80%        |
+| **Fases de Compilação**      | 6           |
+| **Otimizações**              | 5 tipos     |
+| **Exemplos**                 | 9 programas |
+| **Redução Máxima de Código** | 29.7%       |
 
 ---
 
@@ -675,6 +723,7 @@ def test_repeticao_para_sem_passo():
 ### 🔴 **Bug Crítico: Loop com Passo Negativo**
 
 **Problema (v2.0):**
+
 ```portugol
 para i de 10 ate 1 passo -1 faca
     escreva(i)  // Nunca executava!
@@ -684,6 +733,7 @@ fimpara
 **Causa:** Condição estática `while i <= 1` sempre falsa quando i=10
 
 **Solução (v2.1):** Condição dinâmica que detecta sinal do passo
+
 ```python
 # Código Python gerado (v2.1)
 while ((-1) > 0 and i <= 1) or ((-1) < 0 and i >= 1):
@@ -697,6 +747,7 @@ while ((-1) > 0 and i <= 1) or ((-1) < 0 and i >= 1):
 ### 🆕 **Nova Feature: Passo Opcional**
 
 **Antes (v2.0):**
+
 ```portugol
 para i de 1 ate 10 passo 1 faca  // passo obrigatório
     escreva(i)
@@ -704,6 +755,7 @@ fimpara
 ```
 
 **Agora (v2.1):**
+
 ```portugol
 para i de 1 ate 10 faca  // passo opcional (padrão = 1)
     escreva(i)
@@ -758,11 +810,11 @@ python -m pytest tests/ --cov=src --cov-report=term-missing
 
 ### 📖 **Bibliografia Acadêmica**
 
-1. **Aho, A. V., Lam, M. S., Sethi, R., & Ullman, J. D.** (2006). *Compilers: Principles, Techniques, and Tools* (2nd ed.). Addison-Wesley. (Dragon Book)
+1. **Aho, A. V., Lam, M. S., Sethi, R., & Ullman, J. D.** (2006). _Compilers: Principles, Techniques, and Tools_ (2nd ed.). Addison-Wesley. (Dragon Book)
 
-2. **Appel, A. W.** (2004). *Modern Compiler Implementation in Java* (2nd ed.). Cambridge University Press.
+2. **Appel, A. W.** (2004). _Modern Compiler Implementation in Java_ (2nd ed.). Cambridge University Press.
 
-3. **Cooper, K. D., & Torczon, L.** (2011). *Engineering a Compiler* (2nd ed.). Morgan Kaufmann.
+3. **Cooper, K. D., & Torczon, L.** (2011). _Engineering a Compiler_ (2nd ed.). Morgan Kaufmann.
 
 ### 🔗 **Recursos Online**
 
@@ -783,6 +835,7 @@ Contribuições são bem-vindas! Para contribuir:
 5. Abra um Pull Request
 
 **Áreas para Contribuição:**
+
 - 🐛 Correção de bugs
 - ✨ Novas features de linguagem
 - 🧪 Mais testes
@@ -800,6 +853,7 @@ Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](L
 ## 👥 Autor
 
 **Erick Vieira**
+
 - GitHub: [@ErickIV](https://github.com/ErickIV)
 - Instituição: UNISUL - Universidade do Sul de Santa Catarina
 

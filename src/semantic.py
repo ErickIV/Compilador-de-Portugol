@@ -117,6 +117,12 @@ class AnalisadorSemantico:
     def __init__(self):
         self.tabela_simbolos = TabelaSimbolos()
         self.tipos_compativel_int_real = {'inteiro', 'real'}
+        self.debug_pro = False
+
+    def __init__(self, debug_pro: bool = False):
+        self.tabela_simbolos = TabelaSimbolos()
+        self.tipos_compativel_int_real = {'inteiro', 'real'}
+        self.debug_pro = debug_pro
 
     def analisar(self, programa: Programa) -> None:
         """
@@ -127,10 +133,14 @@ class AnalisadorSemantico:
         """
         # Primeira passada: registrar todas as declarações
         for declaracao in programa.declaracoes:
+            if self.debug_pro:
+                print(f"[SEMANTIC] declaracao: {declaracao.nome} : {declaracao.tipo}")
             self._analisar_declaracao(declaracao)
         
         # Segunda passada: analisar comandos
         for comando in programa.comandos:
+            if self.debug_pro:
+                print(f"[SEMANTIC] analisar comando: {type(comando).__name__}")
             self._analisar_comando(comando)
 
     def _analisar_declaracao(self, declaracao: DeclaracaoVariavel) -> None:

@@ -62,6 +62,14 @@ class OtimizadorCodigoIntermediario:
         self.copias: Dict[str, str] = {}      # Variável → variável copiada
         self.variaveis_usadas: Set[str] = set()
         self.modificacoes_feitas = False
+        self.debug_pro = False
+
+    def __init__(self, debug_pro: bool = False):
+        self.constantes: Dict[str, str] = {}  # Variável → valor constante
+        self.copias: Dict[str, str] = {}      # Variável → variável copiada
+        self.variaveis_usadas: Set[str] = set()
+        self.modificacoes_feitas = False
+        self.debug_pro = debug_pro
     
     def otimizar(self, instrucoes: List[InstrucaoIntermediaria], 
                  max_passadas: int = 5) -> List[InstrucaoIntermediaria]:
@@ -79,6 +87,8 @@ class OtimizadorCodigoIntermediario:
         
         for passada in range(max_passadas):
             self.modificacoes_feitas = False
+            if self.debug_pro:
+                print(f"[OPT] pass {passada+1} início")
             
             # Análise de variáveis usadas
             self._analisar_uso_variaveis(codigo)
@@ -91,8 +101,13 @@ class OtimizadorCodigoIntermediario:
             codigo = self._dead_code_elimination(codigo)
             
             # Se não houve mudanças, parar
+            if self.debug_pro:
+                print(f"[OPT] pass {passada+1} modificacoes_feitas={self.modificacoes_feitas}")
             if not self.modificacoes_feitas:
                 break
+
+        if self.debug_pro:
+            print(f"[OPT] otimização concluída após {passada+1} passadas")
         
         return codigo
     
