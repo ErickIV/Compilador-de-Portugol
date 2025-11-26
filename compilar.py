@@ -25,6 +25,7 @@ def main():
     # Configurações padrão
     arquivo_entrada = "programa.por"
     debug = False
+    debug_pro = False
     salvar = False
     mostrar_intermediario = False
     otimizar = False
@@ -44,6 +45,8 @@ def main():
             debug = True
         elif arg == '--save':
             salvar = True
+        elif arg == '--debugpro':
+            debug_pro = True
         elif arg == '--intermediate':
             mostrar_intermediario = True
         elif arg == '--optimize':
@@ -74,7 +77,8 @@ def main():
         compilador = CompiladorPortugol(
             debug=debug,
             mostrar_intermediario=mostrar_intermediario,
-            otimizar=otimizar
+            otimizar=otimizar,
+            debug_pro=debug_pro
         )
         
         # Compilar e executar

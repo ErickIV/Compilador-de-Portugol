@@ -27,11 +27,16 @@ class Parser:
     
     def __init__(self, lexer: Lexer):
         self.lexer = lexer
+        # Accept debug_pro from lexer if available
+        self.debug_pro = getattr(lexer, 'debug_pro', False)
         self.token_atual = self.lexer.proximo_token()
 
     def _avancar(self) -> None:
         """Avança para o próximo token"""
+        prev = self.token_atual
         self.token_atual = self.lexer.proximo_token()
+        if self.debug_pro:
+            print(f"[PARSER] avança: consumiu '{prev.lexema}' -> próximo '{self.token_atual.lexema}'")
 
     def _esperar_token(self, tipo_esperado: TipoToken) -> Token:
         """

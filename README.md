@@ -294,8 +294,26 @@ python compilar.py programa.por --debug --intermediate --optimize
 | `--show-afd` | Demonstra AFDs para tokens (educacional) | `python compilar.py teste.por --show-afd` |
 | `--debug` | Mostra todas as fases detalhadamente | `python compilar.py teste.por --debug` |
 | `--save` | Salva arquivo .py gerado | `python compilar.py teste.por --save` |
+| `--debugpro` | Modo de debug passo-a-passo (muito verboso): mostra processamento caractere-a-caractere no lexer, tokens reconhecidos, avanço do parser, passos da análise semântica, instruções adicionadas ao IR e passos do otimizador | `python compilar.py teste.por --debugpro` |
 
 ---
+
+**Sobre `--debugpro`:**
+
+- `--debugpro` é um modo de depuração extremamente verboso pensado para fins educacionais e diagnóstico. Quando ativado, o compilador imprime:
+    - O lexer processando cada caractere e mensagens quando tokens são reconhecidos;
+    - O parser mostrando avanços e consumo de tokens (token-a-token);
+    - Mensagens da análise semântica para declarações e comandos analisados;
+    - Cada instrução criada no código intermediário (IR) enquanto a IR é gerada;
+    - Passos e relatórios do otimizador durante as passadas de transformação.
+
+- Use `--debugpro` para entender internamente como cada fase funciona ou para depurar casos complexos. A saída pode ser muito extensa; combine com redirecionamento para arquivo quando necessário:
+
+```powershell
+python compilar.py exemplos/demo_completa.por --debugpro > debug_pro_output.txt
+```
+
+-- Para inspeção menos verbosa, prefira `--debug` (mostra resumo das fases) ou `--intermediate` (mostra IR).
 
 ### 🐍 **Método 2: Como Módulo Python**
 

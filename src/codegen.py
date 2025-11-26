@@ -31,6 +31,19 @@ class GeradorDeCodigo:
             'logico': 'bool'
         }
         self.tabela_tipos = {}  # Para armazenar tipos das variáveis
+        self.debug_pro = False
+
+    def __init__(self, debug_pro: bool = False):
+        self.codigo_gerado = []
+        self.nivel_indentacao = 0
+        self.mapeamento_tipos = {
+            'inteiro': 'int',
+            'real': 'float', 
+            'caracter': 'str',
+            'logico': 'bool'
+        }
+        self.tabela_tipos = {}  # Para armazenar tipos das variáveis
+        self.debug_pro = debug_pro
 
     def gerar(self, programa: Programa) -> str:
         """
@@ -318,6 +331,8 @@ class GeradorDeCodigo:
         """Adiciona uma linha de código com indentação apropriada"""
         indentacao = "    " * self.nivel_indentacao
         self.codigo_gerado.append(indentacao + linha)
+        if self.debug_pro:
+            print(f"[CODEGEN] adiciona linha: {indentacao + linha}")
 
     def _aumentar_indentacao(self) -> None:
         """Aumenta o nível de indentação"""
