@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(set PYTHONIOENCODING=utf-8:*)",
+      "Bash(python compilar.py:*)",
+      "Bash(chcp 6500)",
+      "Bash(python teste_lexer_escape.py:*)",
+      "Bash(python -m pytest:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

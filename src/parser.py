@@ -184,15 +184,24 @@ class Parser:
         return Repeticao(condicao, comandos)
 
     def _analisar_repeticao_para(self) -> RepeticaoPara:
-        """Analisa comando de repetição: para variavel de inicio ate fim passo incremento faca comandos fimpara"""
+        """Analisa comando de repetição: para variavel de inicio ate fim [passo incremento] faca comandos fimpara
+
+        Nota: A cláusula 'passo' é opcional. Se omitida, o passo padrão é 1.
+        """
         self._esperar_token(TipoToken.PARA)
         variavel = self._esperar_token(TipoToken.IDENTIFICADOR).lexema
         self._esperar_token(TipoToken.DE)
         inicio = self._analisar_expressao()
         self._esperar_token(TipoToken.ATE)
         fim = self._analisar_expressao()
-        self._esperar_token(TipoToken.PASSO)
-        passo = self._analisar_expressao()
+
+        # Passo é opcional - padrão é 1
+        if self.token_atual.tipo == TipoToken.PASSO:
+            self._avancar()
+            passo = self._analisar_expressao()
+        else:
+            passo = Literal("1")
+
         self._esperar_token(TipoToken.FACA)
 
         comandos = []

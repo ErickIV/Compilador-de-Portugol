@@ -203,11 +203,25 @@ class Lexer:
         self._avancar()  # Pula a primeira aspas
         lexema = ''
         
-        while self._caractere_atual() is not None and self._caractere_atual() != '"':
+        while self._caractere_atual() is not None:
             caractere = self._caractere_atual()
+            
+            # Tratamento de escape
+            if caractere == '\\':
+                self._avancar()
+                proximo = self._caractere_atual()
+                if proximo:
+                    lexema += proximo
+                    self._avancar()
+                continue
+            
+            if caractere == '"':
+                break
+                
             if caractere == '\n':
                 self.linha += 1
                 self.coluna = 1
+            
             lexema += caractere
             self._avancar()
             

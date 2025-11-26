@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defesa de TCC - Compilador Portugol</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="progress-bar"></div>
+
+    <main id="presentation">
+
+        <!-- Slide 1: Capa -->
+        <section class="slide active" id="slide-1">
+            <div class="content-center">
+                <div class="badge">A3 - Teoria da Computação e Compiladores</div>
+                <h1>Compilador de Portugol</h1>
+                <p class="subtitle">Um Tradutor Educacional de Portugol para Python</p>
+                <div class="author">
+                    <p><strong>Acadêmico:</strong> Erick Vieira, Patrick Lohn, Rafael Sonoki</p>
+                    <p><strong>Curso:</strong> Ciência da Computação</p>
+                </div>
+            </div>
+            <div class="background-decoration"></div>
+        </section>
+
+        <!-- Slide 2: Contexto & Problema -->
+        <section class="slide" id="slide-2">
+            <div class="content-split">
+                <div class="text-col">
+                    <h2>O Problema</h2>
+                    <p class="lead">A barreira de entrada na programação.</p>
+                    <ul class="feature-list">
+                        <li><i class="fa-solid fa-triangle-exclamation"></i> Sintaxe complexa de linguagens industriais
+                            (C, Java).</li>
+                        <li><i class="fa-solid fa-language"></i> Barreira do idioma (Inglês).</li>
+                        <li><i class="fa-solid fa-brain"></i> Dificuldade em focar na <strong>lógica</strong> pura.</li>
+                    </ul>
+                </div>
+                <div class="visual-col">
+                    <div class="card glass">
+                        <h3>A Solução</h3>
+                        <p>Unir a simplicidade do <strong>Portugol</strong> com o poder do <strong>Python</strong>.</p>
+                        <div class="comparison">
+                            <div class="code-block">
+                                <span class="lang">Portugol</span>
+                                <code>escreva("Olá")</code>
+                            </div>
+                            <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                            <div class="code-block">
+                                <span class="lang">Python</span>
+                                <code>print("Olá")</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Arquitetura Geral -->
+        <section class="slide" id="slide-3">
+            <h2>Arquitetura do Compilador</h2>
+            <p class="subtitle">Implementação modular em 6 fases</p>
+
+            <div class="architecture-diagram">
+                <div class="phase" data-step="1">
+                    <div class="icon"><i class="fa-solid fa-file-code"></i></div>
+                    <span>Código Fonte</span>
+                </div>
+                <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                <div class="phase-group">
+                    <div class="phase" data-step="2">
+                        <div class="icon"><i class="fa-solid fa-list-ol"></i></div>
+                        <span>Léxico</span>
+                    </div>
+                    <div class="phase" data-step="3">
+                        <div class="icon"><i class="fa-solid fa-sitemap"></i></div>
+                        <span>Sintático</span>
+                    </div>
+                    <div class="phase" data-step="4">
+                        <div class="icon"><i class="fa-solid fa-check-double"></i></div>
+                        <span>Semântico</span>
+                    </div>
+                </div>
+
+                <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                <div class="phase-group">
+                    <div class="phase" data-step="5">
+                        <div class="icon"><i class="fa-solid fa-code-branch"></i></div>
+                        <span>Intermediário</span>
+                    </div>
+                    <div class="phase" data-step="6">
+                        <div class="icon"><i class="fa-solid fa-bolt"></i></div>
+                        <span>Otimizador</span>
+                    </div>
+                </div>
+
+                <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                <div class="phase" data-step="7">
+                    <div class="icon"><i class="fa-brands fa-python"></i></div>
+                    <span>Python</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Frontend (Análise) -->
+        <section class="slide" id="slide-4">
+            <h2>Frontend: Análise</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="icon-header"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    <h3>Analisador Léxico</h3>
+                    <p>Transforma texto em tokens usando <strong>Expressões Regulares</strong> e <strong>Autômatos
+                            Finitos</strong>.</p>
+                    <code class="mini-code">"inteiro" -> TOKEN_TIPO</code>
+                </div>
+                <div class="card">
+                    <div class="icon-header"><i class="fa-solid fa-network-wired"></i></div>
+                    <h3>Analisador Sintático</h3>
+                    <p>Constrói a <strong>Árvore Sintática Abstrata (AST)</strong> usando descida recursiva.</p>
+                    <code class="mini-code">Declaração -> Tipo ID</code>
+                </div>
+                <div class="card">
+                    <div class="icon-header"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>Analisador Semântico</h3>
+                    <p>Valida tipos, escopo de variáveis e inicialização.</p>
+                    <code class="mini-code">x = "texto" // Erro!</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Backend (Síntese) -->
+        <section class="slide" id="slide-5">
+            <h2>Backend: Síntese e Otimização</h2>
+            <div class="content-split">
+                <div class="text-col">
+                    <ul class="timeline">
+                        <li>
+                            <strong>Código Intermediário</strong>
+                            <p>Geração de código de 3 endereços (TAC) para facilitar transformações.</p>
+                        </li>
+                        <li>
+                            <strong>Otimizações</strong>
+                            <p>Constant Folding, Dead Code Elimination, Copy Propagation.</p>
+                        </li>
+                        <li>
+                            <strong>Geração de Código</strong>
+                            <p>Tradução final para Python 3.11+.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="visual-col">
+                    <div class="code-window">
+                        <div class="window-header">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                            <span>optimizer.py</span>
+                        </div>
+                        <pre><code>// Exemplo de Otimização
+x <- 10 + 5
+y <- x + 0
+
+// Torna-se:
+x <- 15
+y <- 15</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Otimizações Detalhadas -->
+        <section class="slide" id="slide-6">
+            <h2>Otimizações Implementadas</h2>
+            <p class="subtitle">5 tipos de otimizações automáticas</p>
+            <div class="grid-2" style="max-width: 1000px;">
+                <div class="card">
+                    <h3><i class="fa-solid fa-calculator"></i> Constant Folding</h3>
+                    <p>Avalia expressões constantes em tempo de compilação</p>
+                    <div class="code-window" style="margin-top: 1rem;">
+                        <pre><code>5 + 3 * 2  →  11</code></pre>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3><i class="fa-solid fa-equals"></i> Algebraic Simplification</h3>
+                    <p>Aplica identidades matemáticas</p>
+                    <div class="code-window" style="margin-top: 1rem;">
+                        <pre><code>x + 0  →  x
+x * 1  →  x
+x * 0  →  0</code></pre>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3><i class="fa-solid fa-arrows-rotate"></i> Constant Propagation</h3>
+                    <p>Substitui variáveis por valores conhecidos</p>
+                    <div class="code-window" style="margin-top: 1rem;">
+                        <pre><code>x = 5
+y = x + 3  →  y = 8</code></pre>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3><i class="fa-solid fa-trash"></i> Dead Code Elimination</h3>
+                    <p>Remove código nunca utilizado</p>
+                    <div class="code-window" style="margin-top: 1rem;">
+                        <pre><code>temp = x + y  // Removido</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Demonstração -->
+        <section class="slide" id="slide-7">
+            <h2>Demonstração Prática</h2>
+            <div class="demo-container">
+                <div class="code-window">
+                    <div class="window-header">entrada.por</div>
+                    <pre><code class="language-portugol">inteiro i
+para i de 1 ate 5 faca
+    escreva("Número: ", i)
+fimpara</code></pre>
+                </div>
+                <div class="arrow-anim"><i class="fa-solid fa-gears"></i></div>
+                <div class="code-window">
+                    <div class="window-header">saida.py</div>
+                    <pre><code class="language-python">i = 0
+for i in range(1, 6, 1):
+    print("Número: ", i)</code></pre>
+                </div>
+            </div>
+            <div class="center-text" style="margin-top: 2rem;">
+                <p><em>Suporte a loops, condicionais, I/O e tipos de dados.</em></p>
+            </div>
+        </section>
+
+        <!-- Slide 8: Resultados e Métricas -->
+        <section class="slide" id="slide-8">
+            <h2>Resultados do Projeto</h2>
+            <div class="grid-2" style="max-width: 900px;">
+                <div class="card glass">
+                    <h3><i class="fa-solid fa-code"></i> Implementação</h3>
+                    <ul class="feature-list" style="margin-top: 1rem;">
+                        <li><strong>~3.500</strong> linhas de código</li>
+                        <li><strong>10</strong> módulos principais</li>
+                        <li><strong>6</strong> fases de compilação</li>
+                        <li><strong>5</strong> tipos de otimizações</li>
+                    </ul>
+                </div>
+                <div class="card glass">
+                    <h3><i class="fa-solid fa-vial"></i> Testes e Qualidade</h3>
+                    <ul class="feature-list" style="margin-top: 1rem;">
+                        <li><strong>98</strong> testes automatizados</li>
+                        <li><strong>~80%</strong> cobertura de código</li>
+                        <li><strong>9</strong> programas exemplo</li>
+                        <li><strong>29.7%</strong> redução com otimizações</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card" style="margin-top: 2rem; max-width: 900px;">
+                <h3 style="text-align: center;"><i class="fa-solid fa-flask"></i> Tecnologias</h3>
+                <p style="text-align: center; color: #94a3b8;">Python 3.11+ | Biblioteca Padrão | Arquitetura Modular |
+                    AFDs & ERs</p>
+            </div>
+        </section>
+
+        <!-- Slide 9: Exemplos Práticos -->
+        <section class="slide" id="slide-9">
+            <h2>Exemplos Práticos</h2>
+            <p class="subtitle">Programas reais funcionando com o compilador</p>
+            <div class="grid-3" style="max-width: 1200px;">
+                <div class="card">
+                    <div class="icon-header"><i class="fa-solid fa-heartbeat"></i></div>
+                    <h3>Calculadora IMC</h3>
+                    <p>Aplicação interativa com validações complexas e condicionais aninhadas</p>
+                    <div class="code-window" style="margin-top: 1rem;">
+                        <pre style="font-size: 0.85rem;"><code>leia(peso)
+leia(altura)
+imc <- peso / (altura ^ 2)
+se imc < 18.5 entao
+    escreva("Abaixo")
+fimse</code></pre>
+                    </div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #64748b;">
+                        <i class="fa-solid fa-check"></i> I/O | <i class="fa-solid fa-check"></i> Matemática complexa
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="icon-header"><i class="fa-solid fa-sort"></i></div>
+                    <h3>Bubble Sort</h3>
+                    <p>Algoritmo clássico de ordenação com loops aninhados</p>
+                    <div class="code-window" style="margin-top: 1rem;">
+                        <pre style="font-size: 0.85rem;"><code>enquanto i < n faca
+  enquanto j < n-1 faca
+    se v[j] > v[j+1] entao
+      temp <- v[j]
+    fimse
+  fimenquanto
+fimenquanto</code></pre>
+                    </div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #64748b;">
+                        <i class="fa-solid fa-check"></i> Loops aninhados | <i class="fa-solid fa-check"></i>
+                        Comparações
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="icon-header"><i class="fa-solid fa-infinity"></i></div>
+                    <h3>Fibonacci</h3>
+                    <p>Sequência de Fibonacci usando loop 'para' com passos</p>
+                    <div class="code-window" style="margin-top: 1rem;">
+                        <pre style="font-size: 0.85rem;"><code>a <- 0
+b <- 1
+para i de 1 ate 10 faca
+  escreva(a)
+  temp <- a + b
+  a <- b
+fimpara</code></pre>
+                    </div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #64748b;">
+                        <i class="fa-solid fa-check"></i> Loop 'para' | <i class="fa-solid fa-check"></i> Acumuladores
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: Conclusão -->
+        <section class="slide" id="slide-10">
+            <div class="content-center">
+                <h2>Conclusão</h2>
+                <div class="grid-2">
+                    <div class="card glass">
+                        <h3>Impacto Educacional</h3>
+                        <p>Facilita o ensino de lógica de programação removendo barreiras sintáticas iniciais.</p>
+                    </div>
+                    <div class="card glass">
+                        <h3>Extensibilidade</h3>
+                        <p>Arquitetura modular permite adicionar novos backends (C, Java) ou features facilmente.</p>
+                    </div>
+                </div>
+                <h3 style="margin-top: 3rem;">Obrigado!</h3>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="controls">
+        <button id="prevBtn" class="nav-btn"><i class="fa-solid fa-chevron-left"></i></button>
+        <span id="slide-counter">1 / 10</span>
+        <button id="nextBtn" class="nav-btn"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

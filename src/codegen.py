@@ -148,8 +148,8 @@ class GeradorDeCodigo:
         self._diminuir_indentacao()
 
     def _gerar_repeticao_para(self, repeticao: RepeticaoPara) -> None:
-        """Gera código para estrutura de repetição 'para'"""
-        # Traduz para loop while para manter semântica clara
+        """Gera código para estrutura de repetição 'para' com suporte a passo positivo e negativo"""
+        # Traduz para loop while com condição dinâmica baseada no sinal do passo
         inicio_codigo = self._gerar_expressao(repeticao.inicio)
         fim_codigo = self._gerar_expressao(repeticao.fim)
         passo_codigo = self._gerar_expressao(repeticao.passo)
@@ -157,11 +157,16 @@ class GeradorDeCodigo:
         # Inicializar variável do loop
         self._adicionar_linha(f"{repeticao.variavel} = {inicio_codigo}")
 
-        # Gerar condição do while baseada no passo
-        # Se passo é positivo: variavel <= fim
-        # Se passo é negativo: variavel >= fim
-        # Aqui assumimos passo positivo por simplicidade (pode ser melhorado)
-        self._adicionar_linha(f"while {repeticao.variavel} <= {fim_codigo}:")
+        # Gerar condição do while que funciona para passo positivo e negativo
+        # A condição verifica:
+        # - Se passo > 0: variavel <= fim
+        # - Se passo < 0: variavel >= fim
+        # Isso garante que o loop funcione em ambas as direções
+        condicao = (
+            f"while (({passo_codigo}) > 0 and {repeticao.variavel} <= {fim_codigo}) or "
+            f"(({passo_codigo}) < 0 and {repeticao.variavel} >= {fim_codigo}):"
+        )
+        self._adicionar_linha(condicao)
 
         self._aumentar_indentacao()
         if repeticao.comandos:
