@@ -86,173 +86,13 @@
             z-index: 10;
             width: 100%;
             height: 100%;
-            padding: 45px 70px;
+            padding: 35px 60px;
             box-sizing: border-box;
             overflow-y: auto;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-        }
-
-        /* Slides centralizados verticalmente */
-        .slide-content.centered {
-            justify-content: center;
-            padding: 40px 80px;
-        }
-
-        .slide-content.centered h1 {
-            font-size: 3.5rem;
-        }
-
-        .slide-content.centered h2 {
-            font-size: 2.8rem;
-            margin-bottom: 30px;
-        }
-
-        .slide-content.centered .content-grid {
-            gap: 30px;
-            margin: 25px 0;
-        }
-
-        .slide-content.centered .content-box {
-            padding: 28px;
-        }
-
-        .slide-content.centered .badges {
-            margin: 25px 0;
-            gap: 18px;
-        }
-
-        .slide-content.centered .badge {
-            padding: 12px 24px;
-            font-size: 1rem;
-        }
-
-        .slide-content.centered .pipeline {
-            margin: 25px 0;
-            gap: 12px;
-        }
-
-        .slide-content.centered .phase {
-            padding: 20px;
-        }
-
-        .slide-content.centered ul {
-            margin: 12px 0;
-        }
-
-        .slide-content.centered ul li {
-            margin: 8px 0;
-            font-size: 1rem;
-        }
-
-        .slide-content.centered pre {
-            margin: 12px 0;
-            padding: 16px;
-        }
-
-        .slide-content.centered h3 {
-            font-size: 1.7rem;
-            margin: 12px 0 10px;
-        }
-
-        .slide-content.centered .afd-diagram {
-            margin: 15px 0;
-            padding: 20px;
-        }
-
-        /* Estilo para imagens nos slides */
-        .book-image {
-            width: 120px;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            flex-shrink: 0;
-            transition: transform 0.3s ease;
-        }
-
-        .book-image:hover {
-            transform: scale(1.05);
-        }
-
-        .book-container {
-            margin-top: 25px;
-            background: rgba(255,255,255,0.05);
-            padding: 25px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .book-container p {
-            font-size: 1.2rem;
-            text-align: left;
-            flex: 1;
-        }
-
-        /* Slides com muito conteúdo - padding reduzido */
-        .slide-content.compact {
-            padding: 35px 60px;
-        }
-
-        .slide-content.compact h2 {
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-        }
-
-        .slide-content.compact h3 {
-            font-size: 1.35rem;
-            margin: 10px 0 8px;
-        }
-
-        .slide-content.compact .content-grid {
-            gap: 15px;
-            margin: 12px 0;
-        }
-
-        .slide-content.compact .content-box {
-            padding: 18px;
-        }
-
-        .slide-content.compact pre {
-            padding: 12px;
-            font-size: 0.78rem;
-            margin: 10px 0;
-        }
-
-        .slide-content.compact ul li {
-            margin: 6px 0;
-            font-size: 0.88rem;
-        }
-
-        .slide-content.compact .code-section {
-            padding: 14px;
-        }
-
-        .slide-content.compact .code-section h4 {
-            font-size: 1.05rem;
-            margin-bottom: 8px;
-        }
-
-        .slide-content.compact .code-compare {
-            gap: 15px;
-            margin: 15px 0;
-        }
-
-        .slide-content.compact .metrics {
-            gap: 15px;
-            margin: 15px 0;
-        }
-
-        .slide-content.compact .metric-card {
-            padding: 15px;
-        }
-
-        .slide-content.compact .metric-value {
-            font-size: 2rem;
         }
 
         /* Scroll personalizado */
@@ -289,8 +129,8 @@
         }
 
         h1 {
-            font-size: 3.2rem;
-            margin: 15px 0 20px;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            margin: 10px 0 15px;
             text-align: center;
             background: linear-gradient(to right, #f8f9fa, #e9ecef);
             -webkit-background-clip: text;
@@ -300,49 +140,49 @@
         }
 
         h2 {
-            font-size: 2.5rem;
-            margin: 0 0 25px;
+            font-size: clamp(1.8rem, 4vw, 2.3rem);
+            margin: 0 0 20px;
             text-align: center;
             color: #ffeb3b;
             line-height: 1.3;
         }
 
         h3 {
-            font-size: 1.6rem;
-            margin: 15px 0 12px;
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            margin: 12px 0 8px;
             color: #81c784;
             line-height: 1.3;
         }
 
         h4 {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2vw, 1.2rem);
             line-height: 1.3;
         }
 
         .subtitle {
-            font-size: 1.4rem;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
             color: #b0bec5;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             line-height: 1.4;
         }
 
         .badges {
             display: flex;
-            gap: 15px;
-            margin: 20px 0;
+            gap: 12px;
+            margin: 15px 0;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .badge {
             background: rgba(255, 255, 255, 0.1);
-            padding: 10px 20px;
+            padding: 8px 18px;
             border-radius: 25px;
             border: 2px solid rgba(255, 255, 255, 0.3);
             font-weight: 600;
             backdrop-filter: blur(10px);
-            font-size: 0.95rem;
+            font-size: clamp(0.75rem, 1.5vw, 0.9rem);
         }
 
         .badge.success {
@@ -363,15 +203,15 @@
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
+            gap: 20px;
             width: 100%;
             max-width: 1400px;
-            margin: 20px 0;
+            margin: 12px 0;
         }
 
         .content-box {
             background: rgba(255, 255, 255, 0.05);
-            padding: 25px;
+            padding: 18px;
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -381,18 +221,18 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
-            margin: 20px 0;
+            gap: 8px;
+            margin: 12px 0;
             flex-wrap: wrap;
         }
 
         .phase {
             background: rgba(255, 255, 255, 0.1);
-            padding: 18px;
+            padding: 12px;
             border-radius: 12px;
             border: 2px solid rgba(129, 199, 132, 0.5);
             flex: 1;
-            min-width: 140px;
+            min-width: 110px;
             text-align: center;
             transition: all 0.3s ease;
         }
@@ -405,40 +245,40 @@
 
         .phase-name {
             font-weight: 700;
-            font-size: 1rem;
+            font-size: clamp(0.85rem, 1.8vw, 0.95rem);
             color: #ffeb3b;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .phase-file {
             font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
+            font-size: clamp(0.7rem, 1.5vw, 0.8rem);
             color: #b0bec5;
         }
 
         .arrow {
-            font-size: 1.8rem;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
             color: #ffeb3b;
         }
 
         code {
             font-family: 'Courier New', monospace;
             background: rgba(0, 0, 0, 0.3);
-            padding: 3px 8px;
+            padding: 2px 6px;
             border-radius: 4px;
             color: #ffeb3b;
-            font-size: 0.9rem;
+            font-size: clamp(0.75rem, 1.5vw, 0.85rem);
         }
 
         pre {
             background: rgba(0, 0, 0, 0.4);
-            padding: 18px;
+            padding: 12px;
             border-radius: 12px;
             border-left: 4px solid #4caf50;
             overflow-x: auto;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            margin: 15px 0;
+            font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+            line-height: 1.4;
+            margin: 10px 0;
         }
 
         pre code {
@@ -448,15 +288,15 @@
 
         ul {
             list-style: none;
-            margin: 15px 0;
+            margin: 10px 0;
         }
 
         ul li {
-            margin: 10px 0;
-            padding-left: 30px;
+            margin: 6px 0;
+            padding-left: 25px;
             position: relative;
-            line-height: 1.5;
-            font-size: 0.95rem;
+            line-height: 1.4;
+            font-size: clamp(0.8rem, 1.8vw, 0.9rem);
         }
 
         ul li:before {
@@ -465,12 +305,12 @@
             left: 0;
             color: #4caf50;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
         }
 
         .table-container {
             overflow-x: auto;
-            margin: 18px 0;
+            margin: 12px 0;
         }
 
         table {
@@ -483,10 +323,10 @@
 
         th,
         td {
-            padding: 12px;
+            padding: 8px;
             text-align: left;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
+            font-size: clamp(0.75rem, 1.5vw, 0.85rem);
         }
 
         th {
@@ -538,18 +378,18 @@
 
         .afd-diagram {
             background: rgba(255, 255, 255, 0.05);
-            padding: 25px;
+            padding: 15px;
             border-radius: 15px;
-            margin: 18px 0;
+            margin: 10px 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 18px;
+            gap: 12px;
         }
 
         .state {
-            width: 75px;
-            height: 75px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background: rgba(33, 150, 243, 0.3);
             border: 3px solid #2196f3;
@@ -557,7 +397,7 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 1.4rem;
+            font-size: clamp(1rem, 2vw, 1.2rem);
         }
 
         .state.final {
@@ -581,16 +421,16 @@
 
         .metrics {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 18px;
-            margin: 20px 0;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin: 12px 0;
             width: 100%;
             max-width: 1400px;
         }
 
         .metric-card {
             background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
+            padding: 12px;
             border-radius: 15px;
             border: 2px solid rgba(255, 255, 255, 0.1);
             text-align: center;
@@ -603,14 +443,14 @@
         }
 
         .metric-value {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
             font-weight: 700;
             color: #4caf50;
-            margin: 10px 0;
+            margin: 6px 0;
         }
 
         .metric-label {
-            font-size: 1rem;
+            font-size: clamp(0.8rem, 1.8vw, 0.95rem);
             color: #b0bec5;
         }
 
@@ -626,21 +466,21 @@
         .code-compare {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 18px;
-            margin: 18px 0;
+            gap: 12px;
+            margin: 10px 0;
         }
 
         .code-section {
             background: rgba(0, 0, 0, 0.3);
-            padding: 18px;
+            padding: 12px;
             border-radius: 12px;
         }
 
         .code-section h4 {
             color: #ffeb3b;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             text-align: center;
-            font-size: 1.1rem;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
         }
 
         @media (max-width: 1200px) {
@@ -696,7 +536,7 @@
     <div class="presentation">
         <!-- Slide 1: Título -->
         <div class="slide active">
-            <div class="slide-content centered">
+            <div class="slide-content">
                 <h1>🔧 Compilador Portugol para Python</h1>
                 <p class="subtitle">Tradutor Educacional com Pipeline Completo de 6 Fases</p>
 
@@ -706,16 +546,16 @@
                     <span class="badge warning">⚡ 5 Otimizações</span>
                     <span class="badge info">🔄 Código de 3 Endereços</span>
                 </div>
-                <div style="margin-top: 35px; text-align: center;">
-                    <p style="font-size: 1.4rem; margin: 8px 0;"><strong>Erick Vieira</strong></p>
-                    <p style="font-size: 1.15rem; color: #b0bec5;">Ciência da Computação - UNISUL</p>
-                    <p style="font-size: 1.05rem; color: #90a4ae; margin-top: 15px;">Teoria da Computação e Compiladores</p>
+                <div style="margin-top: 30px; text-align: center;">
+                    <p style="font-size: clamp(1rem, 2.5vw, 1.2rem); margin: 8px 0;"><strong>Erick Vieira</strong></p>
+                    <p style="font-size: clamp(0.9rem, 2vw, 1rem); color: #b0bec5;">Ciência da Computação - UNISUL</p>
+                    <p style="font-size: clamp(0.85rem, 1.8vw, 0.95rem); color: #90a4ae; margin-top: 15px;">Teoria da Computação e Compiladores</p>
                 </div>
             </div>
         </div>
         <!-- Slide 2: Problema e Solução -->
         <div class="slide">
-            <div class="slide-content centered">
+            <div class="slide-content">
                 <h2>💡 Contexto e Problema</h2>
 
                 <div class="content-grid">
@@ -740,14 +580,14 @@
                     </ul>
                 </div>
             </div>
-                <div style="margin-top: 20px; text-align: center; font-size: 1.25rem;">
+                <div style="margin-top: 20px; text-align: center; font-size: clamp(1rem, 2vw, 1.15rem);">
                     <p class="highlight">🎯 Objetivo: Facilitar o aprendizado com execução real de código</p>
                 </div>
             </div>
         </div>
         <!-- Slide 3: Arquitetura -->
         <div class="slide">
-            <div class="slide-content centered">
+            <div class="slide-content">
                 <h2>🏗️ Arquitetura: 6 Fases Clássicas</h2>
 
             <div class="pipeline">
@@ -782,9 +622,8 @@
                     <div class="phase-file">codegen.py</div>
                 </div>
             </div>
-                <div class="book-container">
-                    <img src="DragonBook.png" alt="Dragon Book" class="book-image">
-                    <p>
+                <div style="margin-top: 25px; background: rgba(255,255,255,0.05); padding: 18px; border-radius: 15px;">
+                    <p style="font-size: clamp(0.95rem, 2vw, 1.1rem); text-align: center;">
                         <strong>Arquitetura Modular</strong> inspirada no <em>"Dragon Book"</em> de Aho et al.<br>
                         Cada fase independente com responsabilidade única
                     </p>
@@ -793,7 +632,7 @@
         </div>
         <!-- Slide 4: Análise Léxica com AFDs -->
         <div class="slide">
-            <div class="slide-content centered">
+            <div class="slide-content">
                 <h2>🔤 Análise Léxica com AFDs</h2>
 
             <div class="content-grid">
@@ -882,19 +721,17 @@ Potência (^) (maior)</code></pre>
    │     └─ direita: Literal(3)
    └─ Saida
       └─ expressoes: [Variavel("x")]</code></pre>
-                    <p style="margin-top: 18px; font-size: 1rem; color: #81c784;">
+                    <p style="margin-top: 20px; font-size: 1rem; color: #81c784;">
                         <strong>Feature:</strong> Cláusula <code>passo</code> opcional no loop <code>para</code>
                     </p>
                 </div>
             </div>
-            </div>
         </div>
         <!-- Slide 6: Análise Semântica -->
         <div class="slide">
-            <div class="slide-content">
-                <h2>✅ Análise Semântica</h2>
+            <h2>✅ Análise Semântica</h2>
 
-                <div class="content-grid">
+            <div class="content-grid">
                 <div class="content-box">
                     <h3>Tabela de Símbolos</h3>
                     <table>
@@ -948,22 +785,20 @@ Variável 'y' não declarada</span></code></pre>
    ├─ linha: int
    ├─ coluna: int
    └─ mensagem: str</code></pre>
-                    <p style="margin-top: 18px; font-size: 1rem; color: #ffeb3b;">
+                    <p style="margin-top: 20px; font-size: 1rem; color: #ffeb3b;">
                         <strong>🎓 Feedback educacional</strong> com posição exata do erro
                     </p>
                 </div>
             </div>
-            </div>
         </div>
         <!-- Slide 7: Código Intermediário -->
         <div class="slide">
-            <div class="slide-content compact">
-                <h2>🔄 Código Intermediário de 3 Endereços</h2>
+            <h2>🔄 Código Intermediário de 3 Endereços</h2>
 
-                <div class="code-compare" style="margin-top: 12px;">
+            <div class="code-compare">
                 <div class="code-section">
                     <h4>Portugol Original</h4>
-                    <pre style="padding: 12px; font-size: 0.78rem;"><code>inteiro a, b, c;
+                    <pre><code>inteiro a, b, c;
 inicio
     a <- 5
     b <- 10
@@ -973,7 +808,7 @@ fim</code></pre>
                 </div>
                 <div class="code-section">
                     <h4>Código Intermediário (IR)</h4>
-                    <pre style="padding: 12px; font-size: 0.78rem;"><code>1: a = 5
+                    <pre><code>1: a = 5
 2: b = 10
 3: t1 = b * 2
 4: t2 = a + t1
@@ -981,42 +816,37 @@ fim</code></pre>
 6: print c</code></pre>
                 </div>
             </div>
-            <div class="content-grid" style="margin-top: 18px;">
-                <div class="content-box">
-                    <h3>Por que 3 Endereços?</h3>
-                    <ul>
-                        <li><strong>Máximo 3 operandos:</strong> <code>resultado = operando1 ⊕ operando2</code></li>
-                        <li><strong>Linearização:</strong> Expressões complexas decompostas em passos simples</li>
-                        <li><strong>Independência:</strong> Abstrai tanto Portugol quanto Python</li>
-                        <li><strong>Otimizável:</strong> Facilita análise e transformações</li>
-                    </ul>
-                </div>
-                <div class="content-box">
-                    <h3>Estruturas de Controle</h3>
-                    <pre style="margin: 10px 0; padding: 12px; font-size: 0.75rem;"><code>// Condicional (se-entao-senao)
+            <div style="margin-top: 30px;">
+                <h3>Por que 3 Endereços?</h3>
+                <ul>
+                    <li><strong>Máximo 3 operandos:</strong> <code>resultado = operando1 ⊕ operando2</code></li>
+                    <li><strong>Linearização:</strong> Expressões complexas decompostas em passos simples</li>
+                    <li><strong>Independência:</strong> Abstrai tanto Portugol quanto Python</li>
+                    <li><strong>Otimizável:</strong> Facilita análise e transformações</li>
+                </ul>
+            </div>
+            <div style="margin-top: 25px; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
+                <h3>Estruturas de Controle</h3>
+                <pre><code>// Condicional (se-entao-senao)
 ifFalse condição goto L_senao
 [comandos_entao]
 goto L_fim
 L_senao:
 [comandos_senao]
 L_fim:
-
 // Loop (enquanto)
 L_inicio:
 ifFalse condição goto L_fim
 [comandos]
 goto L_inicio
 L_fim:</code></pre>
-                </div>
-            </div>
             </div>
         </div>
         <!-- Slide 8: Otimizações -->
         <div class="slide">
-            <div class="slide-content compact">
-                <h2>⚡ 5 Técnicas de Otimização</h2>
+            <h2>⚡ 5 Técnicas de Otimização</h2>
 
-                <div class="table-container">
+            <div class="table-container">
                 <table class="optimization-table">
                     <thead>
                         <tr>
@@ -1073,14 +903,12 @@ L_fim:</code></pre>
                     <p style="text-align: center; color: #4caf50; margin-top: 10px;">2 instruções (-71%!)</p>
                 </div>
             </div>
-            <p style="margin-top: 25px; text-align: center; font-size: 1.3rem; color: #ffeb3b;">
+            <p style="margin-top: 30px; text-align: center; font-size: 1.4rem; color: #ffeb3b;">
                 <strong>📊 Redução documentada: até 29.7% no tamanho do código!</strong>
             </p>
-            </div>
         </div>
         <!-- Slide 9: Geração de Código Python -->
         <div class="slide">
-            <div class="slide-content">
             <h2>🐍 Geração de Código Python</h2>
 
             <div class="content-grid">
@@ -1143,11 +971,9 @@ while ((-1)>0 and i<=1) or
                     </p>
                 </div>
             </div>
-            </div>
         </div>
         <!-- Slide 10: Resultados e Validação -->
         <div class="slide">
-            <div class="slide-content">
             <h2>🧪 Resultados e Validação</h2>
 
             <div class="metrics">
@@ -1232,23 +1058,21 @@ while ((-1)>0 and i<=1) or
                     </p>
                 </div>
             </div>
-            </div>
         </div>
         <!-- Slide 11: Conclusão -->
         <div class="slide">
-            <div class="slide-content compact">
-                <h2>🎓 Conclusão</h2>
+            <h2>🎓 Conclusão</h2>
 
-            <div style="max-width: 1200px; width: 100%;">
+            <div style="max-width: 1200px;">
                 <h3>Contribuições do Projeto</h3>
-                <ul style="margin-bottom: 20px;">
+                <ul style="font-size: 1.2rem; margin-bottom: 30px;">
                     <li><strong>Pipeline Completo:</strong> 6 fases implementadas com rigor acadêmico</li>
                     <li><strong>Valor Educacional:</strong> AFDs explícitos demonstram teoria na prática</li>
                     <li><strong>Otimizações Reais:</strong> 5 técnicas reduzem código em até 29.7%</li>
                     <li><strong>Qualidade Profissional:</strong> 98 testes, 80% cobertura, PEP 8</li>
                     <li><strong>Correções Críticas:</strong> Loop reverso agora funciona corretamente</li>
                 </ul>
-                <div class="content-box" style="margin: 20px 0;">
+                <div class="content-box" style="margin: 30px 0;">
                     <h3>Demonstração Interativa</h3>
                     <pre><code>$ python compilar.py programa.por --debug --intermediate --optimize
 === FASE 1: ANÁLISE LÉXICA ===
@@ -1264,15 +1088,14 @@ Redução: 25.0% ✓
 === FASE 6: GERAÇÃO PYTHON ===
 Código gerado e executado ✓</code></pre>
                 </div>
-                <div style="text-align: center; margin-top: 30px;">
-                    <p style="font-size: 1.6rem; color: #4caf50; margin-bottom: 18px;">
+                <div style="text-align: center; margin-top: 40px;">
+                    <p style="font-size: 1.8rem; color: #4caf50; margin-bottom: 20px;">
                         <strong>Ponte entre Teoria de Compiladores e Prática Real</strong>
                     </p>
                     <p style="font-size: 1.3rem; color: #ffeb3b;">
                         🙏 Obrigado! Perguntas?
                     </p>
                 </div>
-            </div>
             </div>
         </div>
     </div>
@@ -1289,63 +1112,18 @@ Código gerado e executado ✓</code></pre>
         const slides = document.querySelectorAll('.slide');
         const totalSlides = slides.length;
         document.getElementById('total-slides').textContent = totalSlides;
-
-        // Função para obter o slide do hash da URL
-        function getSlideFromHash() {
-            const hash = window.location.hash;
-            if (hash.startsWith('#slide-')) {
-                const slideNum = parseInt(hash.replace('#slide-', '')) - 1;
-                if (slideNum >= 0 && slideNum < totalSlides) {
-                    return slideNum;
-                }
-            }
-            return 0;
-        }
-
-        // Função para atualizar o hash da URL
-        function updateHash(slideIndex) {
-            window.location.hash = `slide-${slideIndex + 1}`;
-        }
-
-        function showSlide(n, updateUrl = true) {
+        function showSlide(n) {
             slides[currentSlide].classList.remove('active');
             currentSlide = (n + totalSlides) % totalSlides;
             slides[currentSlide].classList.add('active');
             document.getElementById('current-slide').textContent = currentSlide + 1;
-
-            // Atualizar URL apenas se não for navegação por hash
-            if (updateUrl) {
-                updateHash(currentSlide);
-            }
         }
-
         function nextSlide() {
             showSlide(currentSlide + 1);
         }
-
         function prevSlide() {
             showSlide(currentSlide - 1);
         }
-
-        // Navegar ao slide correto ao carregar a página
-        window.addEventListener('load', function() {
-            const slideFromHash = getSlideFromHash();
-            if (slideFromHash !== 0) {
-                showSlide(slideFromHash, false);
-            } else if (!window.location.hash) {
-                // Se não há hash, adicionar #slide-1
-                updateHash(0);
-            }
-        });
-
-        // Detectar mudanças no hash (botão voltar/avançar do navegador)
-        window.addEventListener('hashchange', function() {
-            const slideFromHash = getSlideFromHash();
-            if (slideFromHash !== currentSlide) {
-                showSlide(slideFromHash, false);
-            }
-        });
-
         // Navegação por teclado
         document.addEventListener('keydown', function (e) {
             if (e.key === 'ArrowRight' || e.key === ' ') {
