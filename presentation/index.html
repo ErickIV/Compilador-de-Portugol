@@ -52,12 +52,11 @@
             border: 2px solid transparent;
             border-radius: 20px;
             background: linear-gradient(135deg,
-                rgba(129, 199, 132, 0.4) 0%,
-                rgba(33, 150, 243, 0.4) 25%,
-                rgba(255, 235, 59, 0.4) 50%,
-                rgba(33, 150, 243, 0.4) 75%,
-                rgba(129, 199, 132, 0.4) 100%
-            ) border-box;
+                    rgba(129, 199, 132, 0.4) 0%,
+                    rgba(33, 150, 243, 0.4) 25%,
+                    rgba(255, 235, 59, 0.4) 50%,
+                    rgba(33, 150, 243, 0.4) 75%,
+                    rgba(129, 199, 132, 0.4) 100%) border-box;
             -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -168,7 +167,7 @@
             width: 120px;
             height: auto;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             flex-shrink: 0;
             transition: transform 0.3s ease;
         }
@@ -179,7 +178,7 @@
 
         .book-container {
             margin-top: 25px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             padding: 25px;
             border-radius: 15px;
             display: flex;
@@ -707,9 +706,10 @@
                     <span class="badge info">🔄 Código de 3 Endereços</span>
                 </div>
                 <div style="margin-top: 35px; text-align: center;">
-                    <p style="font-size: 1.4rem; margin: 8px 0;"><strong>Erick Vieira</strong></p>
+                    <p style="font-size: 1.4rem; margin: 8px 0;"><strong>Erick Vieira - Patrick Lohn - Rafael Sonoki</strong></p>
                     <p style="font-size: 1.15rem; color: #b0bec5;">Ciência da Computação - UNISUL</p>
-                    <p style="font-size: 1.05rem; color: #90a4ae; margin-top: 15px;">Teoria da Computação e Compiladores</p>
+                    <p style="font-size: 1.05rem; color: #90a4ae; margin-top: 15px;">Teoria da Computação e Compiladores
+                    </p>
                 </div>
             </div>
         </div>
@@ -719,27 +719,27 @@
                 <h2>💡 Contexto e Problema</h2>
 
                 <div class="content-grid">
-                <div class="content-box">
-                    <h3>❌ O Problema</h3>
-                    <ul>
-                        <li><strong>Portugol:</strong> Linguagem educacional em português</li>
-                        <li>Amplamente usada no ensino de lógica</li>
-                        <li><span class="highlight">Não executável diretamente</span></li>
-                        <li>Estudantes precisam reescrever em outra linguagem</li>
-                        <li>Sem feedback imediato de execução</li>
-                    </ul>
+                    <div class="content-box">
+                        <h3>❌ O Problema</h3>
+                        <ul>
+                            <li><strong>Portugol:</strong> Linguagem educacional em português</li>
+                            <li>Amplamente usada no ensino de lógica</li>
+                            <li><span class="highlight">Não executável diretamente</span></li>
+                            <li>Estudantes precisam reescrever em outra linguagem</li>
+                            <li>Sem feedback imediato de execução</li>
+                        </ul>
+                    </div>
+                    <div class="content-box">
+                        <h3>✅ A Solução</h3>
+                        <ul>
+                            <li><strong>Compilador automático</strong> Portugol → Python</li>
+                            <li>Execução imediata dos algoritmos</li>
+                            <li>Validação automática de lógica</li>
+                            <li>Feedback instantâneo para estudantes</li>
+                            <li>Ponte entre teoria e prática</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="content-box">
-                    <h3>✅ A Solução</h3>
-                    <ul>
-                        <li><strong>Compilador automático</strong> Portugol → Python</li>
-                        <li>Execução imediata dos algoritmos</li>
-                        <li>Validação automática de lógica</li>
-                        <li>Feedback instantâneo para estudantes</li>
-                        <li>Ponte entre teoria e prática</li>
-                    </ul>
-                </div>
-            </div>
                 <div style="margin-top: 20px; text-align: center; font-size: 1.25rem;">
                     <p class="highlight">🎯 Objetivo: Facilitar o aprendizado com execução real de código</p>
                 </div>
@@ -750,38 +750,38 @@
             <div class="slide-content centered">
                 <h2>🏗️ Arquitetura: 6 Fases Clássicas</h2>
 
-            <div class="pipeline">
-                <div class="phase">
-                    <div class="phase-name">1. Léxica</div>
-                    <div class="phase-file">lexer.py</div>
+                <div class="pipeline">
+                    <div class="phase">
+                        <div class="phase-name">1. Léxica</div>
+                        <div class="phase-file">lexer.py</div>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="phase">
+                        <div class="phase-name">2. Sintática</div>
+                        <div class="phase-file">parser.py</div>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="phase">
+                        <div class="phase-name">3. Semântica</div>
+                        <div class="phase-file">semantic.py</div>
+                    </div>
                 </div>
-                <span class="arrow">→</span>
-                <div class="phase">
-                    <div class="phase-name">2. Sintática</div>
-                    <div class="phase-file">parser.py</div>
+                <div class="pipeline">
+                    <div class="phase">
+                        <div class="phase-name">4. Código IR</div>
+                        <div class="phase-file">intermediate.py</div>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="phase">
+                        <div class="phase-name">5. Otimização</div>
+                        <div class="phase-file">optimizer.py</div>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="phase">
+                        <div class="phase-name">6. Geração</div>
+                        <div class="phase-file">codegen.py</div>
+                    </div>
                 </div>
-                <span class="arrow">→</span>
-                <div class="phase">
-                    <div class="phase-name">3. Semântica</div>
-                    <div class="phase-file">semantic.py</div>
-                </div>
-            </div>
-            <div class="pipeline">
-                <div class="phase">
-                    <div class="phase-name">4. Código IR</div>
-                    <div class="phase-file">intermediate.py</div>
-                </div>
-                <span class="arrow">→</span>
-                <div class="phase">
-                    <div class="phase-name">5. Otimização</div>
-                    <div class="phase-file">optimizer.py</div>
-                </div>
-                <span class="arrow">→</span>
-                <div class="phase">
-                    <div class="phase-name">6. Geração</div>
-                    <div class="phase-file">codegen.py</div>
-                </div>
-            </div>
                 <div class="book-container">
                     <img src="DragonBook.png" alt="Dragon Book" class="book-image">
                     <p>
@@ -796,45 +796,45 @@
             <div class="slide-content centered">
                 <h2>🔤 Análise Léxica com AFDs</h2>
 
-            <div class="content-grid">
-                <div class="content-box">
-                    <h3>Código Portugol</h3>
-                    <pre><code>inteiro soma;
+                <div class="content-grid">
+                    <div class="content-box">
+                        <h3>Código Portugol</h3>
+                        <pre><code>inteiro soma;
 inicio
     soma <- 10 + 20
     escreva(soma)
 fim</code></pre>
-                    <h3 style="margin-top: 20px;">Tokens Gerados</h3>
-                    <ul style="font-size: 0.9rem;">
-                        <li><code>INTEIRO</code> (linha 1)</li>
-                        <li><code>IDENTIFICADOR('soma')</code></li>
-                        <li><code>INICIO</code> (linha 2)</li>
-                        <li><code>ATRIBUICAO '&lt;-'</code></li>
-                        <li><code>NUMERO_INTEIRO(10)</code></li>
-                    </ul>
-                </div>
-                <div class="content-box">
-                    <h3>AFD para Identificadores</h3>
-                    <div class="afd-diagram">
-                        <div class="state">q0</div>
-                        <div class="transition">
-                            <div class="transition-label">[a-zA-Z_]</div>
-                            <span class="arrow">→</span>
-                        </div>
-                        <div class="state final">q1</div>
-                        <div style="margin-left: 20px; font-size: 0.9rem;">
-                            <p>↻ [a-zA-Z0-9_]</p>
-                        </div>
+                        <h3 style="margin-top: 20px;">Tokens Gerados</h3>
+                        <ul style="font-size: 0.9rem;">
+                            <li><code>INTEIRO</code> (linha 1)</li>
+                            <li><code>IDENTIFICADOR('soma')</code></li>
+                            <li><code>INICIO</code> (linha 2)</li>
+                            <li><code>ATRIBUICAO '&lt;-'</code></li>
+                            <li><code>NUMERO_INTEIRO(10)</code></li>
+                        </ul>
                     </div>
-                    <h3 style="margin-top: 20px;">Features</h3>
-                    <ul style="font-size: 0.9rem;">
-                        <li>9 Expressões Regulares formais</li>
-                        <li>AFDs explícitos no <code>automaton.py</code></li>
-                        <li>Tratamento de escape: <code>\"</code>, <code>\\</code>, <code>\n</code></li>
-                        <li>Rastreamento de linha/coluna</li>
-                    </ul>
+                    <div class="content-box">
+                        <h3>AFD para Identificadores</h3>
+                        <div class="afd-diagram">
+                            <div class="state">q0</div>
+                            <div class="transition">
+                                <div class="transition-label">[a-zA-Z_]</div>
+                                <span class="arrow">→</span>
+                            </div>
+                            <div class="state final">q1</div>
+                            <div style="margin-left: 20px; font-size: 0.9rem;">
+                                <p>↻ [a-zA-Z0-9_]</p>
+                            </div>
+                        </div>
+                        <h3 style="margin-top: 20px;">Features</h3>
+                        <ul style="font-size: 0.9rem;">
+                            <li>9 Expressões Regulares formais</li>
+                            <li>AFDs explícitos no <code>automaton.py</code></li>
+                            <li>Tratamento de escape: <code>\"</code>, <code>\\</code>, <code>\n</code></li>
+                            <li>Rastreamento de linha/coluna</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
         <!-- Slide 5: Análise Sintática e AST -->
@@ -843,17 +843,18 @@ fim</code></pre>
                 <h2>📝 Análise Sintática e AST</h2>
 
                 <div class="content-grid">
-                <div class="content-box">
-                    <h3>Parser de Descida Recursiva</h3>
-                    <ul>
-                        <li><strong>18 Classes de Nós</strong> usando dataclasses</li>
-                        <li>Precedência de operadores correta</li>
-                        <li>Estruturas: <code>Programa</code>, <code>DeclaracaoVariavel</code></li>
-                        <li>Comandos: <code>Atribuicao</code>, <code>Condicional</code>, <code>Repeticao</code></li>
-                        <li>Expressões: <code>ExpressaoBinaria</code>, <code>Literal</code>, <code>Variavel</code></li>
-                    </ul>
-                    <h3 style="margin-top: 25px;">Precedência de Operadores</h3>
-                    <pre><code>OU (menor)
+                    <div class="content-box">
+                        <h3>Parser de Descida Recursiva</h3>
+                        <ul>
+                            <li><strong>18 Classes de Nós</strong> usando dataclasses</li>
+                            <li>Precedência de operadores correta</li>
+                            <li>Estruturas: <code>Programa</code>, <code>DeclaracaoVariavel</code></li>
+                            <li>Comandos: <code>Atribuicao</code>, <code>Condicional</code>, <code>Repeticao</code></li>
+                            <li>Expressões: <code>ExpressaoBinaria</code>, <code>Literal</code>, <code>Variavel</code>
+                            </li>
+                        </ul>
+                        <h3 style="margin-top: 25px;">Precedência de Operadores</h3>
+                        <pre><code>OU (menor)
   ↓
 E
   ↓
@@ -864,10 +865,10 @@ Aditivo (+, -)
 Multiplicativo (*, /, %)
   ↓
 Potência (^) (maior)</code></pre>
-                </div>
-                <div class="content-box">
-                    <h3>Árvore Sintática Abstrata</h3>
-                    <pre><code>Programa
+                    </div>
+                    <div class="content-box">
+                        <h3>Árvore Sintática Abstrata</h3>
+                        <pre><code>Programa
 ├─ Declaracoes
 │  └─ DeclaracaoVariavel
 │     ├─ tipo: "inteiro"
@@ -882,11 +883,11 @@ Potência (^) (maior)</code></pre>
    │     └─ direita: Literal(3)
    └─ Saida
       └─ expressoes: [Variavel("x")]</code></pre>
-                    <p style="margin-top: 18px; font-size: 1rem; color: #81c784;">
-                        <strong>Feature:</strong> Cláusula <code>passo</code> opcional no loop <code>para</code>
-                    </p>
+                        <p style="margin-top: 18px; font-size: 1rem; color: #81c784;">
+                            <strong>Feature:</strong> Cláusula <code>passo</code> opcional no loop <code>para</code>
+                        </p>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
         <!-- Slide 6: Análise Semântica -->
@@ -895,64 +896,64 @@ Potência (^) (maior)</code></pre>
                 <h2>✅ Análise Semântica</h2>
 
                 <div class="content-grid">
-                <div class="content-box">
-                    <h3>Tabela de Símbolos</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Tipo</th>
-                                <th>Inicializada</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>x</code></td>
-                                <td>inteiro</td>
-                                <td>✅ Sim</td>
-                            </tr>
-                            <tr>
-                                <td><code>y</code></td>
-                                <td>real</td>
-                                <td>✅ Sim</td>
-                            </tr>
-                            <tr>
-                                <td><code>nome</code></td>
-                                <td>caracter</td>
-                                <td>⚠️ Não</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <h3 style="margin-top: 25px;">Exemplo de Erro</h3>
-                    <pre><code>inteiro x;
+                    <div class="content-box">
+                        <h3>Tabela de Símbolos</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Tipo</th>
+                                    <th>Inicializada</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>x</code></td>
+                                    <td>inteiro</td>
+                                    <td>✅ Sim</td>
+                                </tr>
+                                <tr>
+                                    <td><code>y</code></td>
+                                    <td>real</td>
+                                    <td>✅ Sim</td>
+                                </tr>
+                                <tr>
+                                    <td><code>nome</code></td>
+                                    <td>caracter</td>
+                                    <td>⚠️ Não</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h3 style="margin-top: 25px;">Exemplo de Erro</h3>
+                        <pre><code>inteiro x;
 inicio
     y <- 10  // ❌ ERRO
 fim
 <span style="color: #f44336;">ErroSemantico (linha 3, coluna 5):
 Variável 'y' não declarada</span></code></pre>
-                </div>
-                <div class="content-box">
-                    <h3>Validações Implementadas</h3>
-                    <ul>
-                        <li><strong>1.</strong> Declaração antes do uso</li>
-                        <li><strong>2.</strong> Compatibilidade de tipos em operações</li>
-                        <li><strong>3.</strong> Detecção de variáveis não inicializadas</li>
-                        <li><strong>4.</strong> Validação de escopo de variáveis</li>
-                        <li><strong>5.</strong> Coerência lógica de expressões</li>
-                    </ul>
-                    <h3 style="margin-top: 25px;">Hierarquia de Exceções</h3>
-                    <pre><code>exceptions.py:
+                    </div>
+                    <div class="content-box">
+                        <h3>Validações Implementadas</h3>
+                        <ul>
+                            <li><strong>1.</strong> Declaração antes do uso</li>
+                            <li><strong>2.</strong> Compatibilidade de tipos em operações</li>
+                            <li><strong>3.</strong> Detecção de variáveis não inicializadas</li>
+                            <li><strong>4.</strong> Validação de escopo de variáveis</li>
+                            <li><strong>5.</strong> Coerência lógica de expressões</li>
+                        </ul>
+                        <h3 style="margin-top: 25px;">Hierarquia de Exceções</h3>
+                        <pre><code>exceptions.py:
 ├─ ErroLexico
 ├─ ErroSintatico
 └─ ErroSemantico
    ├─ linha: int
    ├─ coluna: int
    └─ mensagem: str</code></pre>
-                    <p style="margin-top: 18px; font-size: 1rem; color: #ffeb3b;">
-                        <strong>🎓 Feedback educacional</strong> com posição exata do erro
-                    </p>
+                        <p style="margin-top: 18px; font-size: 1rem; color: #ffeb3b;">
+                            <strong>🎓 Feedback educacional</strong> com posição exata do erro
+                        </p>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
         <!-- Slide 7: Código Intermediário -->
@@ -961,39 +962,39 @@ Variável 'y' não declarada</span></code></pre>
                 <h2>🔄 Código Intermediário de 3 Endereços</h2>
 
                 <div class="code-compare" style="margin-top: 12px;">
-                <div class="code-section">
-                    <h4>Portugol Original</h4>
-                    <pre style="padding: 12px; font-size: 0.78rem;"><code>inteiro a, b, c;
+                    <div class="code-section">
+                        <h4>Portugol Original</h4>
+                        <pre style="padding: 12px; font-size: 0.78rem;"><code>inteiro a, b, c;
 inicio
     a <- 5
     b <- 10
     c <- a + b * 2
     escreva(c)
 fim</code></pre>
-                </div>
-                <div class="code-section">
-                    <h4>Código Intermediário (IR)</h4>
-                    <pre style="padding: 12px; font-size: 0.78rem;"><code>1: a = 5
+                    </div>
+                    <div class="code-section">
+                        <h4>Código Intermediário (IR)</h4>
+                        <pre style="padding: 12px; font-size: 0.78rem;"><code>1: a = 5
 2: b = 10
 3: t1 = b * 2
 4: t2 = a + t1
 5: c = t2
 6: print c</code></pre>
+                    </div>
                 </div>
-            </div>
-            <div class="content-grid" style="margin-top: 18px;">
-                <div class="content-box">
-                    <h3>Por que 3 Endereços?</h3>
-                    <ul>
-                        <li><strong>Máximo 3 operandos:</strong> <code>resultado = operando1 ⊕ operando2</code></li>
-                        <li><strong>Linearização:</strong> Expressões complexas decompostas em passos simples</li>
-                        <li><strong>Independência:</strong> Abstrai tanto Portugol quanto Python</li>
-                        <li><strong>Otimizável:</strong> Facilita análise e transformações</li>
-                    </ul>
-                </div>
-                <div class="content-box">
-                    <h3>Estruturas de Controle</h3>
-                    <pre style="margin: 10px 0; padding: 12px; font-size: 0.75rem;"><code>// Condicional (se-entao-senao)
+                <div class="content-grid" style="margin-top: 18px;">
+                    <div class="content-box">
+                        <h3>Por que 3 Endereços?</h3>
+                        <ul>
+                            <li><strong>Máximo 3 operandos:</strong> <code>resultado = operando1 ⊕ operando2</code></li>
+                            <li><strong>Linearização:</strong> Expressões complexas decompostas em passos simples</li>
+                            <li><strong>Independência:</strong> Abstrai tanto Portugol quanto Python</li>
+                            <li><strong>Otimizável:</strong> Facilita análise e transformações</li>
+                        </ul>
+                    </div>
+                    <div class="content-box">
+                        <h3>Estruturas de Controle</h3>
+                        <pre style="margin: 10px 0; padding: 12px; font-size: 0.75rem;"><code>// Condicional (se-entao-senao)
 ifFalse condição goto L_senao
 [comandos_entao]
 goto L_fim
@@ -1007,8 +1008,8 @@ ifFalse condição goto L_fim
 [comandos]
 goto L_inicio
 L_fim:</code></pre>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
         <!-- Slide 8: Otimizações -->
@@ -1017,115 +1018,115 @@ L_fim:</code></pre>
                 <h2>⚡ 5 Técnicas de Otimização</h2>
 
                 <div class="table-container">
-                <table class="optimization-table">
-                    <thead>
-                        <tr>
-                            <th>Otimização</th>
-                            <th>Descrição</th>
-                            <th>Exemplo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>1. Constant Folding</strong></td>
-                            <td>Avalia constantes em compile-time</td>
-                            <td><code>x <- 2 + 3</code> → <code>x <- 5</code></td>
-                        </tr>
-                        <tr>
-                            <td><strong>2. Constant Propagation</strong></td>
-                            <td>Substitui variáveis por valores</td>
-                            <td><code>x=5; y=x+3</code> → <code>y=5+3</code></td>
-                        </tr>
-                        <tr>
-                            <td><strong>3. Algebraic Simplification</strong></td>
-                            <td>Aplica identidades matemáticas</td>
-                            <td><code>x+0</code> → <code>x</code><br><code>x*1</code> → <code>x</code></td>
-                        </tr>
-                        <tr>
-                            <td><strong>4. Copy Propagation</strong></td>
-                            <td>Elimina cópias desnecessárias</td>
-                            <td><code>a=b; c=a</code> → <code>c=b</code></td>
-                        </tr>
-                        <tr>
-                            <td><strong>5. Dead Code Elimination</strong></td>
-                            <td>Remove código não usado</td>
-                            <td>Remove temporários não referenciados</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="code-compare" style="margin-top: 30px;">
-                <div class="code-section">
-                    <h4>Antes das Otimizações</h4>
-                    <pre><code>1: a = 2
+                    <table class="optimization-table">
+                        <thead>
+                            <tr>
+                                <th>Otimização</th>
+                                <th>Descrição</th>
+                                <th>Exemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. Constant Folding</strong></td>
+                                <td>Avalia constantes em compile-time</td>
+                                <td><code>x <- 2 + 3</code> → <code>x <- 5</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. Constant Propagation</strong></td>
+                                <td>Substitui variáveis por valores</td>
+                                <td><code>x=5; y=x+3</code> → <code>y=5+3</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. Algebraic Simplification</strong></td>
+                                <td>Aplica identidades matemáticas</td>
+                                <td><code>x+0</code> → <code>x</code><br><code>x*1</code> → <code>x</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. Copy Propagation</strong></td>
+                                <td>Elimina cópias desnecessárias</td>
+                                <td><code>a=b; c=a</code> → <code>c=b</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>5. Dead Code Elimination</strong></td>
+                                <td>Remove código não usado</td>
+                                <td>Remove temporários não referenciados</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="code-compare" style="margin-top: 30px;">
+                    <div class="code-section">
+                        <h4>Antes das Otimizações</h4>
+                        <pre><code>1: a = 2
 2: b = 3
 3: t1 = a + b
 4: t2 = t1 + 0
 5: x = t2 * 1
 6: t3 = x
 7: print t3</code></pre>
-                    <p style="text-align: center; color: #f44336; margin-top: 10px;">7 instruções</p>
-                </div>
-                <div class="code-section">
-                    <h4>Depois das Otimizações</h4>
-                    <pre><code>1: x = 5
+                        <p style="text-align: center; color: #f44336; margin-top: 10px;">7 instruções</p>
+                    </div>
+                    <div class="code-section">
+                        <h4>Depois das Otimizações</h4>
+                        <pre><code>1: x = 5
 2: print x</code></pre>
-                    <p style="text-align: center; color: #4caf50; margin-top: 10px;">2 instruções (-71%!)</p>
+                        <p style="text-align: center; color: #4caf50; margin-top: 10px;">2 instruções (-71%!)</p>
+                    </div>
                 </div>
-            </div>
-            <p style="margin-top: 25px; text-align: center; font-size: 1.3rem; color: #ffeb3b;">
-                <strong>📊 Redução documentada: até 29.7% no tamanho do código!</strong>
-            </p>
+                <p style="margin-top: 25px; text-align: center; font-size: 1.3rem; color: #ffeb3b;">
+                    <strong>📊 Redução documentada: até 29.7% no tamanho do código!</strong>
+                </p>
             </div>
         </div>
         <!-- Slide 9: Geração de Código Python -->
         <div class="slide">
             <div class="slide-content">
-            <h2>🐍 Geração de Código Python</h2>
+                <h2>🐍 Geração de Código Python</h2>
 
-            <div class="content-grid">
-                <div class="content-box">
-                    <h3>Mapeamentos de Tipos</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Portugol</th>
-                                <th>Python</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>inteiro</code></td>
-                                <td><code>int</code></td>
-                            </tr>
-                            <tr>
-                                <td><code>real</code></td>
-                                <td><code>float</code></td>
-                            </tr>
-                            <tr>
-                                <td><code>caracter</code></td>
-                                <td><code>str</code></td>
-                            </tr>
-                            <tr>
-                                <td><code>logico</code></td>
-                                <td><code>bool</code></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <h3 style="margin-top: 25px;">Estruturas de Controle</h3>
-                    <ul style="font-size: 0.95rem;">
-                        <li><code>se-entao-senao</code> → <code>if-else</code></li>
-                        <li><code>enquanto-faca</code> → <code>while</code></li>
-                        <li><code>para-de-ate</code> → <code>while</code> (dinâmico)</li>
-                        <li><code>leia(x)</code> → <code>x = int(input())</code></li>
-                        <li><code>escreva(x)</code> → <code>print(x)</code></li>
-                    </ul>
-                </div>
-                <div class="content-box">
-                    <h3>Bug Crítico Corrigido! 🐛→✅</h3>
-                    <p style="color: #81c784; margin-bottom: 15px;"><strong>Loop com Passo Negativo</strong></p>
+                <div class="content-grid">
+                    <div class="content-box">
+                        <h3>Mapeamentos de Tipos</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Portugol</th>
+                                    <th>Python</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>inteiro</code></td>
+                                    <td><code>int</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>real</code></td>
+                                    <td><code>float</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>caracter</code></td>
+                                    <td><code>str</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>logico</code></td>
+                                    <td><code>bool</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h3 style="margin-top: 25px;">Estruturas de Controle</h3>
+                        <ul style="font-size: 0.95rem;">
+                            <li><code>se-entao-senao</code> → <code>if-else</code></li>
+                            <li><code>enquanto-faca</code> → <code>while</code></li>
+                            <li><code>para-de-ate</code> → <code>while</code> (dinâmico)</li>
+                            <li><code>leia(x)</code> → <code>x = int(input())</code></li>
+                            <li><code>escreva(x)</code> → <code>print(x)</code></li>
+                        </ul>
+                    </div>
+                    <div class="content-box">
+                        <h3>Bug Crítico Corrigido! 🐛→✅</h3>
+                        <p style="color: #81c784; margin-bottom: 15px;"><strong>Loop com Passo Negativo</strong></p>
 
-                    <pre><code>// Portugol
+                        <pre><code>// Portugol
 para i de 10 ate 1 passo -1 faca
     escreva(i)
 fimpara
@@ -1138,100 +1139,100 @@ while ((-1)>0 and i<=1) or
       ((-1)<0 and i>=1):
     print(i)  # ✅ Funciona!
     i = i + (-1)</code></pre>
-                    <p style="margin-top: 15px; font-size: 0.95rem; color: #ffeb3b;">
-                        <strong>Solução:</strong> Condição dinâmica detecta sinal do passo em runtime
-                    </p>
+                        <p style="margin-top: 15px; font-size: 0.95rem; color: #ffeb3b;">
+                            <strong>Solução:</strong> Condição dinâmica detecta sinal do passo em runtime
+                        </p>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
         <!-- Slide 10: Resultados e Validação -->
         <div class="slide">
             <div class="slide-content">
-            <h2>🧪 Resultados e Validação</h2>
+                <h2>🧪 Resultados e Validação</h2>
 
-            <div class="metrics">
-                <div class="metric-card">
-                    <div class="metric-value">98</div>
-                    <div class="metric-label">Testes Passando</div>
+                <div class="metrics">
+                    <div class="metric-card">
+                        <div class="metric-value">98</div>
+                        <div class="metric-label">Testes Passando</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">~80%</div>
+                        <div class="metric-label">Cobertura</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">3.500</div>
+                        <div class="metric-label">Linhas de Código</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">10</div>
+                        <div class="metric-label">Módulos</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">9</div>
+                        <div class="metric-label">Exemplos</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">6</div>
+                        <div class="metric-label">Fases</div>
+                    </div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-value">~80%</div>
-                    <div class="metric-label">Cobertura</div>
+                <div class="content-grid" style="margin-top: 30px;">
+                    <div class="content-box">
+                        <h3>Distribuição de Testes</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Módulo</th>
+                                    <th>Testes</th>
+                                    <th>Foco</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>test_lexer.py</code></td>
+                                    <td>3</td>
+                                    <td>Tokenização, escape</td>
+                                </tr>
+                                <tr>
+                                    <td><code>test_parser.py</code></td>
+                                    <td>35</td>
+                                    <td>AST, passo opcional</td>
+                                </tr>
+                                <tr>
+                                    <td><code>test_semantic.py</code></td>
+                                    <td>26</td>
+                                    <td>Validação, tipos</td>
+                                </tr>
+                                <tr>
+                                    <td><code>test_codegen.py</code></td>
+                                    <td>23</td>
+                                    <td>Geração, loops</td>
+                                </tr>
+                                <tr>
+                                    <td><code>test_integration.py</code></td>
+                                    <td>14</td>
+                                    <td>End-to-end</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="content-box">
+                        <h3>Programas de Exemplo</h3>
+                        <ul>
+                            <li><code>demo_completa.por</code> - Demonstração geral</li>
+                            <li><code>calculadora_imc.por</code> - Entrada/saída</li>
+                            <li><code>bubble_sort.por</code> - Ordenação</li>
+                            <li><code>fibonacci.por</code> - Recursão iterativa</li>
+                            <li><code>fatorial.por</code> - Potenciação</li>
+                            <li><code>teste_loop_reverso.por</code> - Passo negativo</li>
+                            <li><code>teste_string_escape.por</code> - Caracteres especiais</li>
+                        </ul>
+                        <p style="margin-top: 20px; color: #4caf50; font-size: 1.1rem;">
+                            <strong>✅ Todos compilam e executam corretamente!</strong>
+                        </p>
+                    </div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-value">3.500</div>
-                    <div class="metric-label">Linhas de Código</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value">10</div>
-                    <div class="metric-label">Módulos</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value">9</div>
-                    <div class="metric-label">Exemplos</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value">6</div>
-                    <div class="metric-label">Fases</div>
-                </div>
-            </div>
-            <div class="content-grid" style="margin-top: 30px;">
-                <div class="content-box">
-                    <h3>Distribuição de Testes</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Módulo</th>
-                                <th>Testes</th>
-                                <th>Foco</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>test_lexer.py</code></td>
-                                <td>3</td>
-                                <td>Tokenização, escape</td>
-                            </tr>
-                            <tr>
-                                <td><code>test_parser.py</code></td>
-                                <td>35</td>
-                                <td>AST, passo opcional</td>
-                            </tr>
-                            <tr>
-                                <td><code>test_semantic.py</code></td>
-                                <td>26</td>
-                                <td>Validação, tipos</td>
-                            </tr>
-                            <tr>
-                                <td><code>test_codegen.py</code></td>
-                                <td>23</td>
-                                <td>Geração, loops</td>
-                            </tr>
-                            <tr>
-                                <td><code>test_integration.py</code></td>
-                                <td>14</td>
-                                <td>End-to-end</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="content-box">
-                    <h3>Programas de Exemplo</h3>
-                    <ul>
-                        <li><code>demo_completa.por</code> - Demonstração geral</li>
-                        <li><code>calculadora_imc.por</code> - Entrada/saída</li>
-                        <li><code>bubble_sort.por</code> - Ordenação</li>
-                        <li><code>fibonacci.por</code> - Recursão iterativa</li>
-                        <li><code>fatorial.por</code> - Potenciação</li>
-                        <li><code>teste_loop_reverso.por</code> - Passo negativo</li>
-                        <li><code>teste_string_escape.por</code> - Caracteres especiais</li>
-                    </ul>
-                    <p style="margin-top: 20px; color: #4caf50; font-size: 1.1rem;">
-                        <strong>✅ Todos compilam e executam corretamente!</strong>
-                    </p>
-                </div>
-            </div>
             </div>
         </div>
         <!-- Slide 11: Conclusão -->
@@ -1239,18 +1240,18 @@ while ((-1)>0 and i<=1) or
             <div class="slide-content compact">
                 <h2>🎓 Conclusão</h2>
 
-            <div style="max-width: 1200px; width: 100%;">
-                <h3>Contribuições do Projeto</h3>
-                <ul style="margin-bottom: 20px;">
-                    <li><strong>Pipeline Completo:</strong> 6 fases implementadas com rigor acadêmico</li>
-                    <li><strong>Valor Educacional:</strong> AFDs explícitos demonstram teoria na prática</li>
-                    <li><strong>Otimizações Reais:</strong> 5 técnicas reduzem código em até 29.7%</li>
-                    <li><strong>Qualidade Profissional:</strong> 98 testes, 80% cobertura, PEP 8</li>
-                    <li><strong>Correções Críticas:</strong> Loop reverso agora funciona corretamente</li>
-                </ul>
-                <div class="content-box" style="margin: 20px 0;">
-                    <h3>Demonstração Interativa</h3>
-                    <pre><code>$ python compilar.py programa.por --debug --intermediate --optimize
+                <div style="max-width: 1200px; width: 100%;">
+                    <h3>Contribuições do Projeto</h3>
+                    <ul style="margin-bottom: 20px;">
+                        <li><strong>Pipeline Completo:</strong> 6 fases implementadas com rigor acadêmico</li>
+                        <li><strong>Valor Educacional:</strong> AFDs explícitos demonstram teoria na prática</li>
+                        <li><strong>Otimizações Reais:</strong> 5 técnicas reduzem código em até 29.7%</li>
+                        <li><strong>Qualidade Profissional:</strong> 98 testes, 80% cobertura, PEP 8</li>
+                        <li><strong>Correções Críticas:</strong> Loop reverso agora funciona corretamente</li>
+                    </ul>
+                    <div class="content-box" style="margin: 20px 0;">
+                        <h3>Demonstração Interativa</h3>
+                        <pre><code>$ python compilar.py programa.por --debug --intermediate --optimize
 === FASE 1: ANÁLISE LÉXICA ===
 Tokens: 23 encontrados ✓
 === FASE 2: ANÁLISE SINTÁTICA ===
@@ -1263,16 +1264,16 @@ Validação concluída ✓
 Redução: 25.0% ✓
 === FASE 6: GERAÇÃO PYTHON ===
 Código gerado e executado ✓</code></pre>
+                    </div>
+                    <div style="text-align: center; margin-top: 30px;">
+                        <p style="font-size: 1.6rem; color: #4caf50; margin-bottom: 18px;">
+                            <strong>Ponte entre Teoria de Compiladores e Prática Real</strong>
+                        </p>
+                        <p style="font-size: 1.3rem; color: #ffeb3b;">
+                            🙏 Obrigado! Perguntas?
+                        </p>
+                    </div>
                 </div>
-                <div style="text-align: center; margin-top: 30px;">
-                    <p style="font-size: 1.6rem; color: #4caf50; margin-bottom: 18px;">
-                        <strong>Ponte entre Teoria de Compiladores e Prática Real</strong>
-                    </p>
-                    <p style="font-size: 1.3rem; color: #ffeb3b;">
-                        🙏 Obrigado! Perguntas?
-                    </p>
-                </div>
-            </div>
             </div>
         </div>
     </div>
@@ -1328,7 +1329,7 @@ Código gerado e executado ✓</code></pre>
         }
 
         // Navegar ao slide correto ao carregar a página
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             const slideFromHash = getSlideFromHash();
             if (slideFromHash !== 0) {
                 showSlide(slideFromHash, false);
@@ -1339,7 +1340,7 @@ Código gerado e executado ✓</code></pre>
         });
 
         // Detectar mudanças no hash (botão voltar/avançar do navegador)
-        window.addEventListener('hashchange', function() {
+        window.addEventListener('hashchange', function () {
             const slideFromHash = getSlideFromHash();
             if (slideFromHash !== currentSlide) {
                 showSlide(slideFromHash, false);
